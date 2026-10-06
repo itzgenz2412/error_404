@@ -5,258 +5,174 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Settings - Lumi by Deris</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
-<script>window.ortEnv={wasm:{numThreads:1,simd:true,proxy:false}};</script>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#05070d;--line:rgba(255,255,255,.07);--muted:#8c95b0;--accent:#7c8cff;--accent2:#a88cff}
+:root{--bg:#05070d;--line:rgba(255,255,255,.07);--muted:#8c95b0;--accent:#fb7185;--accent2:#e11d48}
 html,body{margin:0;width:100%;height:100%;background:var(--bg);color:#fff;font-family:Geist,sans-serif;overflow:hidden}
-body{display:flex;justify-content:center;background:radial-gradient(140% 90% at 50% -20%,color-mix(in srgb,var(--accent) 22%,#1a1f3d) 0%,#0e1120 28%,#05070d 65%)}
-.app{width:100%;max-width:780px;height:100dvh;height:100svh;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border-left:1px solid var(--line);border-right:1px solid var(--line)}
-.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;backdrop-filter:blur(40px) saturate(180%);background:rgba(8,10,20,.7);border-bottom:1px solid var(--line);flex:none}
-.back{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#d0d6ec;display:grid;place-items:center;cursor:pointer}
-.content{flex:1;overflow-y:auto;padding:18px 14px 30px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.content::-webkit-scrollbar{display:none}
-.card{background:linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:14px}
+body{display:flex;justify-content:center;background:radial-gradient(140% 90% at 50% -20%,#1a1f3d 0%,#0e1120 28%,#05070d 65%)}
+.app{width:100%;max-width:780px;height:100dvh;display:flex;flex-direction:column;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(8,10,20,.7);border-bottom:1px solid var(--line);flex:none}
+.back{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;display:grid;place-items:center;cursor:pointer}
+.content{flex:1;overflow-y:auto;padding:18px 14px 30px}.content::-webkit-scrollbar{display:none}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:14px}
 .card h3{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-family:Geist Mono,monospace}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}.row:last-child{border:0}
-.label{font-size:13.5px;font-weight:500}.hint{font-size:11px;color:var(--muted);margin-top:2px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.label{font-size:13.5px;font-weight:500}.hint{font-size:11px;color:var(--muted)}
 .input,.select,textarea{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:#fff;font-size:13px;outline:0}
-.accent-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.dot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent}.dot.active{border-color:#fff;transform:scale(1.1)}
-.switch{width:44px;height:26px;background:rgba(255,255,255,.1);border-radius:100px;position:relative;cursor:pointer;border:1px solid var(--line);transition:.2s}.switch.on{background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.switch:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}.switch.on:after{transform:translateX(18px)}
+.switch{width:44px;height:26px;background:rgba(255,255,255,.1);border-radius:100px;position:relative;cursor:pointer;border:1px solid var(--line)}.switch.on{background:linear-gradient(135deg,var(--accent),var(--accent2))}.switch:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}.switch.on:after{transform:translateX(18px)}
 .btn{width:100%;padding:13px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-weight:600;font-size:13px;cursor:pointer}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0}.btn-danger{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);color:#fb7185}
 .key-status{font-size:11px;margin-top:6px;font-family:Geist Mono,monospace}.key-status.ok{color:#22c55e}.key-status.bad{color:#fb7185}
 .pref-chip{display:inline-block;padding:7px 12px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:11px;margin:4px;cursor:pointer}.pref-chip.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
-.progress{height:6px;background:rgba(255,255,255,.08);border-radius:20px;overflow:hidden;margin-top:8px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.2s}
-.download-info{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid var(--line);font-family:Geist Mono,monospace;font-size:10px;color:var(--muted);display:flex;justify-content:space-between}
+.slider-row{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.slider-head{display:flex;justify-content:space-between;margin-bottom:8px}
+.slider-head span{font-size:12px;font-family:Geist Mono,monospace;color:var(--muted)}
+.slider-head b{font-size:12px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.voice-preview{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line);font-size:11px;font-family:Geist Mono,monospace;color:var(--muted)}
+.dot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent}.dot.active{border-color:#fff}
+.accent-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.mini-orb-test{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 30% 25%, #fff 0%, var(--accent) 45%, var(--accent2) 80%);box-shadow:0 0 12px var(--accent);display:inline-block;vertical-align:middle;margin-right:8px}
+.mini-orb-test.speaking{animation:orbPulse 0.8s infinite}
+@keyframes orbPulse{0%{transform:scale(1)}50%{transform:scale(1.18);filter:brightness(1.3)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="top"><button class="back" onclick="location.href='index.html'">←</button><div style="font-weight:600;font-size:14px">Settings • Lumi by Deris</div><div style="width:40px"></div></div>
 <div class="content">
-<div class="card"><h3>🔑 Account & API</h3>
-<div class="row"><div><div class="label">Your name</div><div class="hint">What Lumi calls you</div></div><div style="width:140px"><input id="user_name" class="input" placeholder="Deris"></div></div>
-<div class="row"><div><div class="label">Avatar</div><div class="hint">2-3 letters</div></div><div style="width:140px"><input id="user_avatar" class="input" maxlength="3" placeholder="YOU"></div></div>
+
+<div class="card"><h3>🔑 Account</h3>
+<div class="row"><div><div class="label">Your name</div></div><div style="width:140px"><input id="user_name" class="input" placeholder="Deris"></div></div>
+<div class="row"><div><div class="label">Avatar</div></div><div style="width:140px"><input id="user_avatar" class="input" maxlength="3" placeholder="YOU"></div></div>
 <div class="row" style="flex-direction:column;align-items:stretch;gap:6px"><div style="display:flex;justify-content:space-between"><div><div class="label">Groq API Key</div><div class="hint">gsk_...</div></div><div style="width:160px"><input id="groq_key" class="input" placeholder="gsk_..." oninput="autoSaveKey()" style="font-family:Geist Mono,monospace;font-size:11px"></div></div><div id="keyStatus" class="key-status bad"></div></div>
 </div>
-<div class="card"><h3>🧠 JARVIS Mode</h3>
-<div class="row"><div><div class="label">Hey Lumi Anywhere</div><div class="hint">Wake word</div></div><div class="switch on" id="wake_word" onclick="toggle('wake_word')"></div></div>
-<div class="row"><div><div class="label">Floating Orb Overlay</div><div class="hint">Orb over apps</div></div><div class="switch on" id="overlay_enabled" onclick="toggle('overlay_enabled')"></div></div>
-<div class="row"><div><div class="label">Auto TTS Replies</div><div class="hint">Lumi talks</div></div><div class="switch" id="auto_tts" onclick="toggle('auto_tts')"></div></div>
-<div class="row"><div><div class="label">Phone Control</div><div class="hint">Flashlight, volume, music</div></div><div class="switch on" id="phone_control" onclick="toggle('phone_control')"></div></div>
+
+<div class="card"><h3>🧠 JARVIS - WEBAPP PERMISSIONS</h3>
+<div class="row"><div><div class="label">Floating Orb Overlay</div><div class="hint">Over other apps</div></div><div class="switch on" id="overlay_enabled" onclick="toggle('overlay_enabled')"></div></div>
+<div class="row"><div><div class="label">Auto TTS Replies + Pulse</div><div class="hint">Orb go pulse when talking</div></div><div class="switch" id="auto_tts" onclick="toggle('auto_tts')"></div></div>
+<div class="row"><div><div class="label">Phone Control</div><div class="hint">Open apps, call, torch, alarm - hardcoded</div></div><div class="switch on" id="phone_control" onclick="toggle('phone_control')"></div></div>
+<div class="row"><button class="btn" onclick="requestAllPermissions()">🔐 Request All Permissions (Mic, Camera, Notification)</button></div>
 </div>
-<div class="card"><h3>🔊 LUMI VOICE LAB - Fixed for GitHub Pages</h3>
+
+<div class="card"><h3>🔊 CHROME VOICE LAB - Custom Boldness</h3>
+<div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);padding:10px;border-radius:12px;font-size:11px;margin-bottom:14px">✅ Chrome Native - No download - Works on GitHub Pages - Pulse when speaking</div>
+
 <div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
-<select id="piper_voice" class="select">
-  <option value="en_US-hfc_female-medium">English Female (15MB) - Fast</option>
-  <option value="en_US-hfc_male-medium">English Male (15MB)</option>
-  <option value="en_GB-alan-medium">English UK Male (15MB)</option>
-</select>
-<div style="display:flex;gap:8px"><button class="btn btn-primary" id="dlBtn" onclick="downloadSelectedPiperVoice()">Download / Prepare Voice</button><button class="btn" style="width:120px" onclick="refreshPiperVoices()">Refresh</button></div>
-<div class="progress"><div id="piperProgress"></div></div>
-<div class="download-info"><span id="downloadSize">Downloaded: 0.00 MB / 0.00 MB</span><span id="downloadPercent">0%</span></div>
-<div id="piperStatus" class="key-status bad">Tap Refresh - GitHub Pages single-thread mode</div></div>
-<div class="row"><div><div class="label">Speed</div></div><div style="width:140px;display:flex;gap:8px;align-items:center"><input id="tts_rate" type="range" min="0.5" max="1.5" step="0.1" value="1" class="select" style="padding:0"><span id="rateVal" style="font-size:11px">1.0</span></div></div>
-<div class="row"><div><div class="label">Test Voice</div></div><button class="btn" style="width:100px" onclick="testPiperVoice()">🔊 Test</button></div>
-<textarea id="testText" rows="2">Hello sir, I am Lumi by Deris, your JARVIS assistant. I am now fixed for GitHub Pages and I will never waste your data again.</textarea>
+<div class="label">Voice Type</div>
+<select id="chrome_voice" class="select"></select>
+<div class="voice-preview" id="voiceInfo">Loading voices...</div>
 </div>
-<div class="card"><h3>💬 Behavior</h3>
-<div><span class="pref-chip active" data-v="professional" onclick="setTalk('professional',this)">💼 Professional</span><span class="pref-chip" data-v="concise" onclick="setTalk('concise',this)">⚡ Concise</span><span class="pref-chip" data-v="detailed" onclick="setTalk('detailed',this)">📚 Detailed</span><span class="pref-chip" data-v="friendly" onclick="setTalk('friendly',this)">🙂 Friendly</span></div>
-<div style="height:8px"></div>
-<div><span class="pref-chip active" data-lang="english" onclick="setLang('english',this)">🇬🇧 English</span><span class="pref-chip" data-lang="pidgin" onclick="setLang('pidgin',this)">🇳🇬 Pidgin</span><span class="pref-chip" data-lang="yoruba" onclick="setLang('yoruba',this)">Yoruba</span><span class="pref-chip" data-lang="mix" onclick="setLang('mix',this)">Eng+Pidgin</span></div>
-<div style="height:12px"></div>
-<div class="row"><div><div class="label">Reply length</div></div><select id="reply_length" class="select" style="width:120px"><option value="short">Short</option><option value="medium">Medium</option><option value="long">Long</option><option value="auto">Auto</option></select></div>
-<div class="row"><div><div class="label">Use emoji</div></div><div class="switch" id="use_emoji" onclick="toggle('use_emoji')"></div></div>
-<textarea id="custom_prompt" rows="3" placeholder="Custom instruction..."></textarea>
+
+<div class="slider-row">
+<div class="slider-head"><span>SPEED (Rate)</span><b id="rateVal">1.0x</b></div>
+<input id="tts_rate" type="range" min="0.5" max="2" step="0.1" value="1">
 </div>
-<div class="card"><h3>🎨 Appearance</h3><div class="accent-grid"><div class="dot active" data-accent="indigo" style="background:linear-gradient(135deg,#7c8cff,#a88cff)" onclick="setAccent('indigo',this)"></div><div class="dot" data-accent="emerald" style="background:linear-gradient(135deg,#34d399,#10b981)" onclick="setAccent('emerald',this)"></div><div class="dot" data-accent="rose" style="background:linear-gradient(135deg,#fb7185,#e11d48)" onclick="setAccent('rose',this)"></div><div class="dot" data-accent="amber" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" onclick="setAccent('amber',this)"></div><div class="dot" data-accent="cyan" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)" onclick="setAccent('cyan',this)"></div><div class="dot" data-accent="white" style="background:linear-gradient(135deg,#fff,#a8b4d0)" onclick="setAccent('white',this)"></div></div></div>
-<div class="card"><button class="btn btn-primary" onclick="saveAll()">Save • Built by Deris</button><div style="height:8px"></div><button class="btn btn-danger" onclick="if(confirm('Wipe all? This will delete voice cache too')){localStorage.clear();if(window.lumiPiperClear)window.lumiPiperClear();location.reload()}">Wipe All</button></div>
+
+<div class="slider-row">
+<div class="slider-head"><span>THICKNESS / BOLDNESS (Pitch)</span><b id="pitchVal">1.0</b></div>
+<input id="tts_pitch" type="range" min="0.5" max="2" step="0.1" value="1">
+<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)"><span>Deep / Bold / Thick</span><span>Light / Thin</span></div>
+</div>
+
+<div class="slider-row">
+<div class="slider-head"><span>LOUDNESS (Boldness)</span><b id="volVal">100%</b></div>
+<input id="tts_volume" type="range" min="0" max="1" step="0.1" value="1">
+</div>
+
+<div class="row"><div><div class="label"><span class="mini-orb-test" id="testOrb"></span>Test Custom Voice</div></div><button class="btn btn-primary" style="width:110px" onclick="testChromeVoice()">🔊 Test</button></div>
+<textarea id="testText" rows="3">Hello sir, I am Lumi by Deris. My voice is bold, thick, and I pulse when I talk.</textarea>
+<div id="ttsStatus" class="key-status ok" style="margin-top:8px">Ready - Pulse will show on orb</div>
+</div>
+
+<div class="card"><h3>🎨 Appearance</h3><div class="accent-grid"><div class="dot active" data-accent="rose" style="background:linear-gradient(135deg,#fb7185,#e11d48)" onclick="setAccent('rose',this)"></div><div class="dot" data-accent="indigo" style="background:linear-gradient(135deg,#7c8cff,#a88cff)" onclick="setAccent('indigo',this)"></div><div class="dot" data-accent="emerald" style="background:linear-gradient(135deg,#34d399,#10b981)" onclick="setAccent('emerald',this)"></div><div class="dot" data-accent="amber" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" onclick="setAccent('amber',this)"></div><div class="dot" data-accent="cyan" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)" onclick="setAccent('cyan',this)"></div><div class="dot" data-accent="white" style="background:linear-gradient(135deg,#fff,#a8b4d0)" onclick="setAccent('white',this)"></div></div></div>
+
+<div class="card"><button class="btn btn-primary" onclick="saveAll()">Save • Built by Deris</button><div style="height:8px"></div><button class="btn btn-danger" onclick="if(confirm('Wipe all?')){localStorage.clear();location.reload()}">Wipe All</button></div>
 </div>
 </div>
 
-<script type="module">
-// ===== ALL LUMI TTS INSIDE HERE - NO EXTERNAL FILE =====
-const LUMI_TTS_KEY = "lumi_ultimate_settings";
-const DEFAULT_VOICE = "en_US-hfc_female-medium";
-let _mod = null, _loading = null, _audio = null, _ortReady=false, isDownloading=false;
-
-function getSettings(){ try{return JSON.parse(localStorage.getItem(LUMI_TTS_KEY)||"{}")}catch{return{}} }
-function getVoice(){ return getSettings().piper_voice || DEFAULT_VOICE }
-function getRate(){ const n=Number(getSettings().tts_rate); return Number.isFinite(n)&&n>0?n:1 }
-
-async function setupORT(){
-  if(_ortReady) return;
-  try{
-    const ort = await import("https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/+esm");
-    ort.env.wasm.numThreads=1; ort.env.wasm.simd=true; ort.env.wasm.proxy=false;
-    ort.env.wasm.wasmPaths="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/";
-    window.ort=ort; _ortReady=true;
-  }catch{ _ortReady=true; }
-}
-async function getPiper(){
-  if(_mod) return _mod;
-  if(_loading) return _loading;
-  _loading=(async()=>{
-    await setupORT();
-    const m=await import("https://esm.sh/piper-tts-web@0.0.6?bundle");
-    _mod=m.default||m.Piper||m;
-    if(_mod.init) try{await _mod.init()}catch{}
-    return _mod;
-  })();
-  return _loading;
-}
-async function storedVoices(){
-  try{
-    const t=await getPiper();
-    let list=[];
-    if(t.storedVoices) list=await t.storedVoices();
-    else if(t.stored) list=await t.stored();
-    if(Array.isArray(list)&&list.length) return list;
-  }catch{}
-  const cached=[];
-  for(let i=0;i<localStorage.length;i++){
-    const k=localStorage.key(i);
-    if(k?.startsWith("lumi_voice_cached_")&&!k.includes("_time_")) cached.push(k.replace("lumi_voice_cached_",""));
-  }
-  return cached;
-}
-async function downloadVoice(voiceId, onProgress){
-  const t=await getPiper();
-  const wrapped=(p)=>{ if(onProgress) onProgress({loaded:p?.loaded||0,total:p?.total||0}); };
-  await t.download(voiceId, wrapped);
-  localStorage.setItem("lumi_voice_cached_"+voiceId,"1");
-}
-async function speakVoice(text, vid){
-  if(_audio){ try{_audio.pause()}catch{} _audio=null }
-  try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==="suspended") await ctx.resume(); }catch{}
-  const t=await getPiper();
-  const wav=await t.predict({text:text, voiceId:vid});
-  const url=URL.createObjectURL(wav);
-  const audio=new Audio(url);
-  audio.playbackRate=getRate();
-  _audio=audio;
-  audio.onended=()=>{ URL.revokeObjectURL(url); if(_audio===audio) _audio=null };
-  await audio.play();
-}
-
-// ===== SETTINGS LOGIC =====
-let s=JSON.parse(localStorage.getItem("lumi_ultimate_settings")||"{}");
-const defaults={user_name:"",user_avatar:"YOU",accent:"indigo",talk_style:"professional",lang:"english",reply_length:"medium",custom_prompt:"",use_emoji:false,wake_word:true,overlay_enabled:true,auto_tts:false,phone_control:true,tts_engine:"piper",piper_voice:"en_US-hfc_female-medium",tts_rate:"1"};
-s={...defaults,...s};
+<script>
+let synth=window.speechSynthesis;
+let voices=[];
+function getSettings(){try{return JSON.parse(localStorage.getItem("lumi_ultimate_settings")||"{}")}catch{return{}}}
+let s={user_name:"",user_avatar:"YOU",accent:"rose",talk_style:"professional",auto_tts:false,overlay_enabled:true,phone_control:true,chrome_voice:"",tts_rate:"1",tts_pitch:"1",tts_volume:"1",...getSettings()};
 function save(){localStorage.setItem("lumi_ultimate_settings",JSON.stringify(s));}
-function applyAccent(){
- const map={indigo:["#7c8cff","#a88cff"],emerald:["#34d399","#10b981"],rose:["#fb7185","#e11d48"],amber:["#fbbf24","#f59e0b"],cyan:["#22d3ee","#06b6d4"],white:["#fff","#a8b4d0"]};
- const c=map[s.accent]||map.indigo;
- document.documentElement.style.setProperty("--accent",c[0]);document.documentElement.style.setProperty("--accent2",c[1]);
- document.querySelectorAll(".dot").forEach(d=>d.classList.toggle("active",d.dataset.accent===s.accent));
- document.querySelectorAll("[data-v]").forEach(x=>x.classList.toggle("active",x.dataset.v===s.talk_style));
- document.querySelectorAll("[data-lang]").forEach(x=>x.classList.toggle("active",x.dataset.lang===s.lang));
-}
-function updateStatus(){
- const k=document.getElementById("groq_key").value.trim();const el=document.getElementById("keyStatus");
- if(k.startsWith("gsk_")&&k.length>20){el.textContent="✓ "+k.slice(0,14)+"...";el.className="key-status ok";}else{el.textContent="✕ paste gsk_...";el.className="key-status bad";}
-}
-window.autoSaveKey=()=>{const k=document.getElementById("groq_key").value.trim();if(k){localStorage.setItem("groq_key",k);s.groq_key=k;save();}updateStatus();};
-window.setTalk=(v,el)=>{s.talk_style=v;document.querySelectorAll("[data-v]").forEach(c=>c.classList.remove("active"));el.classList.add("active");save();};
-window.setLang=(v,el)=>{s.lang=v;document.querySelectorAll("[data-lang]").forEach(c=>c.classList.remove("active"));el.classList.add("active");save();};
+function applyAccent(){const map={indigo:["#7c8cff","#a88cff"],emerald:["#34d399","#10b981"],rose:["#fb7185","#e11d48"],amber:["#fbbf24","#f59e0b"],cyan:["#22d3ee","#06b6d4"],white:["#fff","#a8b4d0"]};const c=map[s.accent]||map.rose;document.documentElement.style.setProperty("--accent",c[0]);document.documentElement.style.setProperty("--accent2",c[1]);document.querySelectorAll(".dot").forEach(d=>d.classList.toggle("active",d.dataset.accent===s.accent));}
+function updateKeyStatus(){const k=document.getElementById("groq_key").value.trim();const el=document.getElementById("keyStatus");if(k.startsWith("gsk_")&&k.length>20){el.textContent="✓ "+k.slice(0,14)+"...";el.className="key-status ok";}else{el.textContent="✕ paste gsk_...";el.className="key-status bad";}}
+window.autoSaveKey=()=>{const k=document.getElementById("groq_key").value.trim();if(k){localStorage.setItem("groq_key",k);s.groq_key=k;save();}updateKeyStatus();};
 window.setAccent=(a,el)=>{s.accent=a;applyAccent();document.querySelectorAll(".dot").forEach(d=>d.classList.remove("active"));el.classList.add("active");save();};
 window.toggle=k=>{const el=document.getElementById(k);if(!el)return;el.classList.toggle("on");s[k]=el.classList.contains("on");save();};
+window.requestAllPermissions=async()=>{
+  try{await navigator.mediaDevices.getUserMedia({audio:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{}
+  try{if("Notification" in window){await Notification.requestPermission();}}catch{}
+  try{await navigator.mediaDevices.getUserMedia({video:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{}
+  document.getElementById("ttsStatus").textContent="✓ Permissions requested - Mic, Camera, Notification";
+};
 
-function formatMB(b){if(!Number.isFinite(b)||b<=0)return "0.00 MB";return (b/1024/1024).toFixed(2)+" MB";}
-function updateDownloadInfo(loaded,total){
- const size=document.getElementById("downloadSize");const perc=document.getElementById("downloadPercent");const bar=document.getElementById("piperProgress");
- if(!size||!perc)return;
- if(total>0){size.textContent="Downloaded: "+formatMB(loaded)+" / "+formatMB(total);const pct=Math.min(100,Math.round((loaded/total)*100));perc.textContent=pct+"%";if(bar)bar.style.width=pct+"%";}
- else if(loaded>0){size.textContent="Downloaded: "+formatMB(loaded)+" / Calculating...";perc.textContent="...";if(bar)bar.style.width="45%";}
- else{size.textContent="Downloaded: 0.00 MB / 0.00 MB";perc.textContent="0%";if(bar)bar.style.width="0%";}
+function loadVoices(){
+  voices=synth.getVoices().filter(v=>v.lang.startsWith("en"));
+  if(voices.length===0) voices=synth.getVoices();
+  const sel=document.getElementById("chrome_voice");
+  sel.innerHTML="";
+  voices.forEach((v,i)=>{const o=document.createElement("option");o.value=i;o.textContent=`${v.name} (${v.lang}) ${v.default?"- Default":""}`;sel.appendChild(o);});
+  if(s.chrome_voice!==""&&voices[s.chrome_voice]) sel.value=s.chrome_voice;
+  else if(voices.length>0){const def=voices.findIndex(v=>v.default)||0;sel.value=def;s.chrome_voice=def;save();}
+  document.getElementById("voiceInfo").textContent=`${voices.length} voices - ${voices[sel.value]?.name||"Select"}`;
+  sel.onchange=()=>{s.chrome_voice=sel.value;document.getElementById("voiceInfo").textContent=voices[sel.value].name+" - "+voices[sel.value].lang;save();};
 }
+if(synth.onvoiceschanged!==undefined) synth.onvoiceschanged=loadVoices;
+setTimeout(loadVoices,600);
 
-window.refreshPiperVoices=async()=>{
- const sel=document.getElementById("piper_voice");const st=document.getElementById("piperStatus");
- st.textContent="Loading (single-thread for GitHub Pages)...";st.className="key-status bad";
- try{
-  await getPiper();
-  const stored=await storedVoices();
-  const isCached=stored.some(x=>{const id=typeof x==="string"?x:(x.key||x.id||x);return id===s.piper_voice;});
-  if(isCached){
-    st.textContent="✓ Cached already - ZERO data: "+s.piper_voice;st.className="key-status ok";
-    document.getElementById("downloadSize").textContent="Downloaded: Voice ready (cached forever)";
-    document.getElementById("downloadPercent").textContent="100%";
-    document.getElementById("piperProgress").style.width="100%";
-  }else{
-    st.textContent="✓ Ready to download - GitHub Pages fixed mode";st.className="key-status ok";
-  }
-  sel.value=s.piper_voice;
- }catch(e){st.textContent="Failed: "+e.message;st.className="key-status bad";}
+window.testChromeVoice=()=>{
+  const txt=document.getElementById("testText").value.trim();
+  const rate=parseFloat(document.getElementById("tts_rate").value);
+  const pitch=parseFloat(document.getElementById("tts_pitch").value);
+  const vol=parseFloat(document.getElementById("tts_volume").value);
+  const vIndex=parseInt(document.getElementById("chrome_voice").value)||0;
+  s.tts_rate=rate.toString(); s.tts_pitch=pitch.toString(); s.tts_volume=vol.toString(); s.chrome_voice=vIndex.toString(); save();
+  if(synth.speaking) synth.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.rate=rate; u.pitch=pitch; u.volume=vol;
+  if(voices[vIndex]) u.voice=voices[vIndex];
+  const orb=document.getElementById("testOrb");
+  const st=document.getElementById("ttsStatus");
+  orb.classList.add("speaking");
+  st.textContent=`🔊 Speaking - Speed ${rate}x, Thickness ${pitch}, Boldness ${Math.round(vol*100)}% - Orb pulsing`;
+  u.onend=()=>{orb.classList.remove("speaking"); st.textContent=`✓ Done - Pulse stopped`;};
+  u.onerror=()=>{orb.classList.remove("speaking"); st.textContent=`Error`;};
+  synth.speak(u);
 };
 
-window.downloadSelectedPiperVoice=async()=>{
- if(isDownloading){alert("Already downloading, stay on this page!");return;}
- const sel=document.getElementById("piper_voice");const vid=sel?.value||DEFAULT_VOICE;
- s.piper_voice=vid;s.tts_engine="piper";save();
- const st=document.getElementById("piperStatus");const bar=document.getElementById("piperProgress");const btn=document.getElementById("dlBtn");
- const stored=await storedVoices();
- if(stored.some(x=>{const id=typeof x==="string"?x:(x.key||x.id||x);return id===vid;})){
-   st.textContent="✓ Already cached - NO data needed";st.className="key-status ok";
-   document.getElementById("downloadSize").textContent="Ready (cached)";document.getElementById("downloadPercent").textContent="100%";if(bar)bar.style.width="100%";return;
- }
- isDownloading=true; btn.textContent="Downloading... DON'T LEAVE!";
- const beforeUnload=(e)=>{e.preventDefault();e.returnValue="Download at "+(document.getElementById("downloadPercent").textContent||"0%")+". If you leave, e go restart and waste data!";return e.returnValue;};
- window.addEventListener("beforeunload",beforeUnload);
- if(bar)bar.style.width="0%";updateDownloadInfo(0,0);
- st.textContent="Downloading "+vid+"... STAY ON PAGE TILL 100% - No comot!";st.className="key-status bad";
- try{
-  await downloadVoice(vid, p=>{
-   const l=Number(p?.loaded||0),t=Number(p?.total||0);
-   updateDownloadInfo(l,t);
-   if(t>0)st.textContent=`Downloading... ${Math.round(l/t*100)}% • ${formatMB(l)} / ${formatMB(t)} - STAY HERE`;
-   else if(l>0)st.textContent=`Downloading... ${formatMB(l)} - STAY HERE`;
+["tts_rate","tts_pitch","tts_volume"].forEach(id=>{
+  document.getElementById(id).addEventListener("input",e=>{
+    const v=e.target.value;
+    if(id==="tts_rate") document.getElementById("rateVal").textContent=v+"x";
+    if(id==="tts_pitch") document.getElementById("pitchVal").textContent=v;
+    if(id==="tts_volume") document.getElementById("volVal").textContent=Math.round(v*100)+"%";
+    s[id]=v; save();
   });
-  if(bar)bar.style.width="100%";
-  document.getElementById("downloadSize").textContent="Downloaded: Voice ready (cached forever)";
-  document.getElementById("downloadPercent").textContent="100%";
-  st.textContent="✓ DONE & cached forever: "+vid;st.className="key-status ok";
- }catch(e){
-  st.textContent="❌ Failed: "+e.message;st.className="key-status bad";if(bar)bar.style.width="0%";
- }finally{isDownloading=false;btn.textContent="Download / Prepare Voice";window.removeEventListener("beforeunload",beforeUnload);}
-};
+});
 
-window.testPiperVoice=async()=>{
- const txt=document.getElementById("testText").value.trim()||"Hello sir, I am Lumi by Deris.";
- const st=document.getElementById("piperStatus");const sel=document.getElementById("piper_voice");
- s.tts_rate=document.getElementById("tts_rate").value;save();
- st.textContent="🔊 Generating (single-thread)...";
- try{await speakVoice(txt, sel?.value||DEFAULT_VOICE);st.textContent="✓ Speaking - Fixed!";st.className="key-status ok";}
- catch(e){st.textContent="❌ "+e.message+" - Download first till 100%";st.className="key-status bad";}
-};
-
-function load(){
- document.getElementById("user_name").value=s.user_name||"";
- document.getElementById("user_avatar").value=s.user_avatar||"YOU";
- document.getElementById("custom_prompt").value=s.custom_prompt||"";
- document.getElementById("reply_length").value=s.reply_length||"medium";
- document.getElementById("groq_key").value=localStorage.getItem("groq_key")||s.groq_key||"";
- document.getElementById("tts_rate").value=s.tts_rate||"1";
- document.getElementById("rateVal").textContent=s.tts_rate||"1";
- ["wake_word","overlay_enabled","auto_tts","phone_control","use_emoji"].forEach(k=>{const el=document.getElementById(k);if(el)el.classList.toggle("on",s[k]===true);});
- applyAccent();updateStatus();
- document.getElementById("tts_rate").addEventListener("input",e=>{document.getElementById("rateVal").textContent=e.target.value;s.tts_rate=e.target.value;save();});
- document.getElementById("piper_voice").addEventListener("change",()=>{s.piper_voice=document.getElementById("piper_voice").value;s.tts_engine="piper";save();});
- refreshPiperVoices();
+function loadAll(){
+  document.getElementById("user_name").value=s.user_name||"";
+  document.getElementById("user_avatar").value=s.user_avatar||"YOU";
+  document.getElementById("groq_key").value=localStorage.getItem("groq_key")||s.groq_key||"";
+  document.getElementById("tts_rate").value=s.tts_rate||1; document.getElementById("rateVal").textContent=(s.tts_rate||1)+"x";
+  document.getElementById("tts_pitch").value=s.tts_pitch||1; document.getElementById("pitchVal").textContent=s.tts_pitch||1;
+  document.getElementById("tts_volume").value=s.tts_volume||1; document.getElementById("volVal").textContent=Math.round((s.tts_volume||1)*100)+"%";
+  ["overlay_enabled","auto_tts","phone_control"].forEach(k=>{const el=document.getElementById(k);if(el) el.classList.toggle("on",s[k]===true);});
+  applyAccent(); updateKeyStatus();
 }
 window.saveAll=()=>{
- s.user_name=document.getElementById("user_name").value.trim();
- s.user_avatar=(document.getElementById("user_avatar").value.trim()||"YOU").slice(0,3).toUpperCase();
- s.custom_prompt=document.getElementById("custom_prompt").value.trim();
- s.reply_length=document.getElementById("reply_length").value;
- s.piper_voice=document.getElementById("piper_voice").value||DEFAULT_VOICE;
- s.tts_rate=document.getElementById("tts_rate").value;
- const k=document.getElementById("groq_key").value.trim();if(k){localStorage.setItem("groq_key",k);s.groq_key=k;}
- save();applyAccent();updateStatus();
- const b=document.getElementById("dlBtn");const o=b.textContent; b.textContent="Saved ✓";setTimeout(()=>b.textContent="Download / Prepare Voice",1200);
+  s.user_name=document.getElementById("user_name").value.trim();
+  s.user_avatar=(document.getElementById("user_avatar").value.trim()||"YOU").slice(0,3).toUpperCase();
+  s.tts_rate=document.getElementById("tts_rate").value;
+  s.tts_pitch=document.getElementById("tts_pitch").value;
+  s.tts_volume=document.getElementById("tts_volume").value;
+  s.chrome_voice=document.getElementById("chrome_voice").value;
+  const k=document.getElementById("groq_key").value.trim(); if(k){localStorage.setItem("groq_key",k);s.groq_key=k;}
+  save(); const st=document.getElementById("ttsStatus"); st.textContent="✓ Saved!"; setTimeout(()=>st.textContent="Ready",1500);
 };
-window.lumiPiperClear=()=>{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k?.startsWith("lumi_voice_cached_")) localStorage.removeItem(k);}};
-load();
+loadAll();
 </script>
 </body>
 </html>
