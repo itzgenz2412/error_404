@@ -2,124 +2,162 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Settings - Lumi by Deris</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#05070d;--line:rgba(255,255,255,.07);--muted:#8c95b0;--accent:#fb7185;--accent2:#e11d48}
-html,body{margin:0;width:100%;height:100%;background:var(--bg);color:#fff;font-family:Geist,sans-serif;overflow:hidden}
-body{display:flex;justify-content:center;background:radial-gradient(140% 90% at 50% -20%,#1a1f3d 0%,#0e1120 28%,#05070d 65%)}
-.app{width:100%;max-width:780px;height:100dvh;display:flex;flex-direction:column;border-left:1px solid var(--line);border-right:1px solid var(--line)}
-.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(8,10,20,.7);border-bottom:1px solid var(--line);flex:none}
-.back{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;display:grid;place-items:center;cursor:pointer}
-.content{flex:1;overflow-y:auto;padding:18px 14px 30px}.content::-webkit-scrollbar{display:none}
-.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:14px}
-.card h3{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-family:Geist Mono,monospace}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.label{font-size:13.5px;font-weight:500}.hint{font-size:11px;color:var(--muted)}
-.input,.select,textarea{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:#fff;font-size:13px;outline:0}
-.switch{width:44px;height:26px;background:rgba(255,255,255,.1);border-radius:100px;position:relative;cursor:pointer;border:1px solid var(--line)}.switch.on{background:linear-gradient(135deg,var(--accent),var(--accent2))}.switch:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}.switch.on:after{transform:translateX(18px)}
-.btn{width:100%;padding:13px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-weight:600;font-size:13px;cursor:pointer}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0}
-.key-status{font-size:11px;margin-top:6px;font-family:Geist Mono,monospace}.key-status.ok{color:#22c55e}.key-status.bad{color:#fb7185}
-.pref-chip{display:inline-block;padding:7px 12px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:11px;margin:4px;cursor:pointer}.pref-chip.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
-.slider-row{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.slider-head{display:flex;justify-content:space-between;margin-bottom:8px}
-.slider-head span{font-size:12px;font-family:Geist Mono,monospace;color:var(--muted)}
-input[type=range]{width:100%;accent-color:var(--accent)}
-.voice-preview{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line);font-size:11px;font-family:Geist Mono,monospace;color:var(--muted)}
-.mini-orb-test{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 30% 25%, #fff 0%, var(--accent) 45%, var(--accent2) 80%);display:inline-block;vertical-align:middle;margin-right:8px}
-.mini-orb-test.speaking{animation:orbPulse 0.8s infinite}
-@keyframes orbPulse{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
-.dot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent}.dot.active{border-color:#fff}
-.accent-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+:root{--bg:#05070d;--line:rgba(255,255,255,.07);--text:#f5f6ff;--muted:#8c95b0;--accent:#fb7185;--accent2:#e11d48}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Geist,sans-serif;overflow:hidden;overscroll-behavior:none}
+body{display:flex;justify-content:center;background:radial-gradient(140% 90% at 50% -20%, color-mix(in srgb, var(--accent) 20%, #1a1f3d) 0%, #0e1120 25%, #05070d 60%)}
+.app{width:100%;max-width:780px;height:100dvh;height:100svh;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex:none;backdrop-filter:blur(40px) saturate(180%);background:rgba(8,10,20,.65);border-bottom:1px solid var(--line);z-index:10}
+.brand{display:flex;align-items:center;gap:14px}
+.logo-wrap{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, #1a1e38), #10122a);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center}
+.mini-orb{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 30% 25%, #fff 0%, var(--accent) 45%, var(--accent2) 80%);box-shadow:0 0 12px var(--accent),0 0 24px color-mix(in srgb,var(--accent) 50%, transparent);animation:miniBreathe 3s ease-in-out infinite}
+@keyframes miniBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.back{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#d0d6ec;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.back:active{transform:scale(.92)}
+.content{flex:1;overflow-y:auto;padding:16px 14px 40px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.content::-webkit-scrollbar{display:none}
+.card{background:linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:18px;margin-bottom:16px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)}
+.card h3{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-family:Geist Mono,monospace;display:flex;align-items:center;gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);gap:12px}
+.row:last-child{border-bottom:0}
+.label{font-size:14px;font-weight:500;line-height:1.2}.hint{font-size:11.5px;color:var(--muted);margin-top:3px;font-family:Geist Mono,monospace}
+.input,.select,textarea{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;color:#fff;font-size:13.5px;outline:0;font-family:Geist,sans-serif;transition:.2s}
+.input:focus,.select:focus,textarea:focus{border-color:var(--accent);background:rgba(0,0,0,.5);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent)}
+textarea{resize:none;line-height:1.5}
+.switch{width:46px;height:28px;background:rgba(255,255,255,.08);border-radius:100px;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:.25s;flex:none}
+.switch.on{background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 12px color-mix(in srgb, var(--accent) 50%, transparent)}
+.switch:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.25s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.switch.on:after{transform:translateX(18px)}
+.btn{width:100%;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer;transition:.2s;font-family:Geist,sans-serif}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,var(--accent) 0%, var(--accent2) 100%);border:0;box-shadow:0 6px 20px color-mix(in srgb, var(--accent) 40%, transparent)}
+.key-status{font-size:11px;margin-top:8px;font-family:Geist Mono,monospace;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.3)}
+.key-status.ok{color:#22c55e;border:1px solid rgba(34,197,94,.2);background:rgba(34,197,94,.08)}
+.key-status.bad{color:#fb7185;border:1px solid rgba(251,113,133,.2);background:rgba(251,113,133,.08)}
+.pref-chip{display:inline-flex;align-items:center;padding:8px 14px;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;margin:4px;cursor:pointer;transition:.2s;font-weight:500}
+.pref-chip.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff;box-shadow:0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent)}
+.slider-row{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.slider-head{display:flex;justify-content:space-between;margin-bottom:10px;align-items:center}
+.slider-head span{font-size:11px;font-family:Geist Mono,monospace;color:var(--muted);letter-spacing:.05em}
+.slider-head b{font-size:12px;color:#fff;background:rgba(255,255,255,.08);padding:4px 8px;border-radius:8px;font-family:Geist Mono,monospace}
+input[type=range]{width:100%;accent-color:var(--accent);height:4px}
+.voice-preview{margin-top:10px;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);font-size:11.5px;font-family:Geist Mono,monospace;color:var(--muted);line-height:1.5}
+.mini-orb-test{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 25%, #fff 0%, var(--accent) 45%, var(--accent2) 80%);box-shadow:0 0 10px var(--accent);display:inline-block;vertical-align:middle;margin-right:8px}
+.mini-orb-test.speaking{animation:orbPulse 0.6s infinite}
+@keyframes orbPulse{0%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.18);filter:brightness(1.3)}100%{transform:scale(1)}}
+.dot{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s;position:relative}
+.dot.active{border-color:#fff;transform:scale(1.1);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent), 0 4px 12px rgba(0,0,0,.3)}
+.accent-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:4px}
+.info-box{padding:12px 14px;border-radius:14px;font-size:11.5px;line-height:1.5;margin-bottom:14px;font-family:Geist Mono,monospace;display:flex;gap:10px;align-items:flex-start}
+.info-box.rose{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.18);color:#fecdd3}
+.info-box.green{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.18);color:#bbf7d0}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="top"><button class="back" onclick="location.href='index.html'">←</button><div style="font-weight:600;font-size:14px">Settings • Lumi by Deris</div><div style="width:40px"></div></div>
+<div class="top"><button class="back" onclick="location.href='index.html'">←</button><div class="brand"><div class="logo-wrap"><div class="mini-orb"></div></div><div style="font-weight:600;font-size:14px">Settings</div></div><div style="width:40px"></div></div>
 <div class="content">
 
 <div class="card"><h3>🔑 Account</h3>
-<div class="row"><div><div class="label">Your name</div></div><div style="width:140px"><input id="user_name" class="input"></div></div>
-<div class="row"><div><div class="label">Avatar</div></div><div style="width:140px"><input id="user_avatar" class="input" maxlength="3"></div></div>
-<div class="row" style="flex-direction:column;align-items:stretch;gap:6px"><div style="display:flex;justify-content:space-between"><div><div class="label">Groq API Key</div><div class="hint">gsk_...</div></div><div style="width:160px"><input id="groq_key" class="input" oninput="autoSaveKey()" style="font-family:Geist Mono,monospace;font-size:11px"></div></div><div id="keyStatus" class="key-status bad"></div></div>
+<div class="row"><div><div class="label">Your name</div><div class="hint">Shown on Lumi header</div></div><div style="width:150px"><input id="user_name" class="input" placeholder="Your name"></div></div>
+<div class="row"><div><div class="label">Avatar</div><div class="hint">3 letters max</div></div><div style="width:150px"><input id="user_avatar" class="input" maxlength="3" placeholder="YOU"></div></div>
+<div class="row" style="flex-direction:column;align-items:stretch;gap:10px"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="label">Groq API Key</div><div class="hint">gsk_...</div></div><div style="width:170px"><input id="groq_key" class="input" oninput="autoSaveKey()" style="font-family:Geist Mono,monospace;font-size:11px" placeholder="gsk_..."></div></div><div id="keyStatus" class="key-status bad">✕ paste gsk_...</div></div>
 </div>
 
-<div class="card"><h3>⚙️ More Settings</h3>
-<div class="row"><div><div class="label">Language</div></div><select id="lang" class="select" style="width:140px"><option value="english">English</option><option value="pidgin">Pidgin</option><option value="yoruba">Yoruba mix</option><option value="mix">Mix</option></select></div>
-<div class="row"><div><div class="label">Reply Length</div></div><select id="reply_length" class="select" style="width:140px"><option value="normal">Normal</option><option value="short">Short</option><option value="long">Long detailed</option></select></div>
-<div class="row"><div><div class="label">Context Memory</div><div class="hint">Chats Lumi remembers</div></div><select id="context_window" class="select" style="width:80px"><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></div>
-<div class="row"><div><div class="label">Use Emoji</div></div><div class="switch on" id="use_emoji" onclick="toggle('use_emoji')"></div></div>
-<div class="row"><div><div class="label">Haptic</div></div><div class="switch on" id="haptic" onclick="toggle('haptic')"></div></div>
-<div class="row"><div><div class="label">Save History</div></div><div class="switch on" id="save_history" onclick="toggle('save_history')"></div></div>
+<div class="card"><h3>⚙️ Preferences</h3>
+<div class="row"><div><div class="label">Language</div><div class="hint">Response style</div></div><select id="lang" class="select" style="width:150px"><option value="english">English</option><option value="pidgin">Pidgin</option><option value="yoruba">Yoruba mix</option><option value="mix">Mix</option></select></div>
+<div class="row"><div><div class="label">Reply Length</div></div><select id="reply_length" class="select" style="width:150px"><option value="normal">Normal</option><option value="short">Short</option><option value="long">Long detailed</option></select></div>
+<div class="row"><div><div class="label">Context Memory</div><div class="hint">Chats remembered</div></div><select id="context_window" class="select" style="width:90px"><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></div>
+<div class="row"><div><div class="label">Use Emoji</div><div class="hint">Add emoji in replies</div></div><div class="switch on" id="use_emoji" onclick="toggle('use_emoji')"></div></div>
+<div class="row"><div><div class="label">Haptic Feedback</div><div class="hint">Vibrate on swipe</div></div><div class="switch on" id="haptic" onclick="toggle('haptic')"></div></div>
+<div class="row"><div><div class="label">Save History</div><div class="hint">Keep chats locally</div></div><div class="switch on" id="save_history" onclick="toggle('save_history')"></div></div>
 </div>
 
 <div class="card"><h3>💬 Behavior</h3>
-<div class="hint">How Lumi behaves</div>
-<textarea id="custom_prompt" rows="3" placeholder="You are Lumi, bold, helpful..."></textarea>
-<div style="margin-top:8px"><span class="pref-chip active" data-talk="professional" onclick="setTalk('professional',this)">Professional</span><span class="pref-chip" data-talk="concise" onclick="setTalk('concise',this)">Concise</span><span class="pref-chip" data-talk="detailed" onclick="setTalk('detailed',this)">Detailed</span><span class="pref-chip" data-talk="friendly" onclick="setTalk('friendly',this)">Friendly</span><span class="pref-chip" data-talk="savage" onclick="setTalk('savage',this)">Savage</span></div>
+<div class="hint" style="margin-bottom:10px">How Lumi behaves — this controls the prompt</div>
+<textarea id="custom_prompt" rows="3" placeholder="You are Lumi, bold, helpful, unisex assistant..."></textarea>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap"><span class="pref-chip active" data-talk="professional" onclick="setTalk('professional',this)">Professional</span><span class="pref-chip" data-talk="concise" onclick="setTalk('concise',this)">Concise</span><span class="pref-chip" data-talk="detailed" onclick="setTalk('detailed',this)">Detailed</span><span class="pref-chip" data-talk="friendly" onclick="setTalk('friendly',this)">Friendly</span><span class="pref-chip" data-talk="savage" onclick="setTalk('savage',this)">Savage</span></div>
 </div>
 
-<div class="card"><h3>🎙️ WAKE WORD - Working for Webapp</h3>
-<div style="background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.2);padding:10px;border-radius:12px;font-size:11px;margin-bottom:12px">Web PWA: Keeps listening in background for wake words. Keep tab open.</div>
+<div class="card"><h3>🎙️ Wake Word</h3>
+<div class="info-box rose">🌐 Web PWA: Keeps listening in background for wake words. Keep tab open.</div>
 <div class="row"><div><div class="label">Enable Wake Detection</div><div class="hint">Hey Lumi for web</div></div><div class="switch" id="wake_enabled" onclick="toggle('wake_enabled')"></div></div>
 <div class="row" style="flex-direction:column;align-items:stretch;gap:8px"><div class="label">Wake Words (comma)</div><input id="wake_words" class="input" placeholder="hey lumi, hello lumi, ok lumi"><div class="hint">Example: hey lumi, hello lumi</div></div>
-<div class="row"><div><div class="label">Floating Orb Overlay</div></div><div class="switch on" id="overlay_enabled" onclick="toggle('overlay_enabled')"></div></div>
-<div class="row"><div><div class="label">Auto TTS + Pulse</div></div><div class="switch" id="auto_tts" onclick="toggle('auto_tts')"></div></div>
+<div class="row"><div><div class="label">Floating Orb Overlay</div><div class="hint">Draggable orb</div></div><div class="switch on" id="overlay_enabled" onclick="toggle('overlay_enabled')"></div></div>
+<div class="row"><div><div class="label">Auto TTS + Pulse</div><div class="hint">Speak replies + orb pulse</div></div><div class="switch" id="auto_tts" onclick="toggle('auto_tts')"></div></div>
 <div class="row"><div><div class="label">Phone Control</div><div class="hint">Open apps, call, torch, alarm</div></div><div class="switch on" id="phone_control" onclick="toggle('phone_control')"></div></div>
 <div class="row"><button class="btn" onclick="requestAllPermissions()">🔐 Request Mic + Camera + Notification</button></div>
 <div id="wakeStatus" class="key-status ok"></div>
 </div>
 
-<div class="card"><h3>🔊 CHROME TTS + TALK PROMPT</h3>
-<div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);padding:10px;border-radius:12px;font-size:11px;margin-bottom:12px">Chrome Native - No download - Pulse + Boldness + Prompt box</div>
+<div class="card"><h3>🔊 Voice & Talk Style</h3>
+<div class="info-box green">✨ Chrome Native - No download - Orb pulses when speaking</div>
 
-<div class="row" style="flex-direction:column;align-items:stretch;gap:6px"><div class="label">🎭 TTS Talk Prompt - Put how you want Lumi to TALK</div><textarea id="tts_prompt" rows="3" placeholder="Example: Talk like bold Nigerian man with deep thick voice, confident, say sir sometimes, slight pidgin, like JARVIS"></textarea><div class="hint">This shapes Lumi reply before speaking. Put personality here.</div></div>
+<div class="row" style="flex-direction:column;align-items:stretch;gap:10px"><div class="label">🎭 Talk Prompt - How you want Lumi to talk</div><textarea id="tts_prompt" rows="3" placeholder="Example: Talk confident, warm, unisex, slightly playful, like a smart companion"></textarea><div class="hint">This shapes Lumi reply before speaking. Put personality here.</div></div>
 
 <div class="row" style="flex-direction:column;align-items:stretch;gap:8px;margin-top:12px">
 <div class="label">Voice Type</div>
 <select id="chrome_voice" class="select"></select>
-<div class="voice-preview" id="voiceInfo">Loading...</div>
+<div class="voice-preview" id="voiceInfo">Loading voices...</div>
 </div>
 
 <div class="slider-row"><div class="slider-head"><span>SPEED</span><b id="rateVal">1.0x</b></div><input id="tts_rate" type="range" min="0.5" max="2" step="0.1" value="1"></div>
-<div class="slider-row"><div class="slider-head"><span>THICKNESS / BOLDNESS (Pitch)</span><b id="pitchVal">1.0</b></div><input id="tts_pitch" type="range" min="0.5" max="2" step="0.1" value="1"></div>
-<div class="slider-row"><div class="slider-head"><span>LOUDNESS</span><b id="volVal">100%</b></div><input id="tts_volume" type="range" min="0" max="1" step="0.1" value="1"></div>
+<div class="slider-row"><div class="slider-head"><span>PITCH / BOLDNESS</span><b id="pitchVal">0.8</b></div><input id="tts_pitch" type="range" min="0" max="2" step="0.1" value="0.8"></div>
+<div class="slider-row"><div class="slider-head"><span>VOLUME</span><b id="volVal">100%</b></div><input id="tts_volume" type="range" min="0" max="1" step="0.1" value="1"></div>
 
-<div class="row"><div><div class="label"><span class="mini-orb-test" id="testOrb"></span>Test with prompt</div></div><button class="btn btn-primary" style="width:110px" onclick="testChromeVoice()">🔊 Test</button></div>
-<textarea id="testText" rows="3">Hello sir, I am Lumi by Deris. Testing bold voice and custom prompt.</textarea>
-<div id="ttsStatus" class="key-status ok">Ready - Orb will pulse</div>
+<div class="row"><div><div class="label"><span class="mini-orb-test" id="testOrb"></span>Preview voice</div></div><button class="btn btn-primary" style="width:120px" onclick="testChromeVoice()">🔊 Test</button></div>
+<textarea id="testText" rows="2">Hello! I am Lumi by Deris. Testing voice and custom prompt.</textarea>
+<div id="ttsStatus" class="key-status ok">Ready - Orb will pulse when speaking</div>
 </div>
 
-<div class="card"><h3>🎨 Accent</h3><div class="accent-grid"><div class="dot active" data-accent="rose" style="background:linear-gradient(135deg,#fb7185,#e11d48)" onclick="setAccent('rose',this)"></div><div class="dot" data-accent="indigo" style="background:linear-gradient(135deg,#7c8cff,#a88cff)" onclick="setAccent('indigo',this)"></div><div class="dot" data-accent="emerald" style="background:linear-gradient(135deg,#34d399,#10b981)" onclick="setAccent('emerald',this)"></div><div class="dot" data-accent="amber" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" onclick="setAccent('amber',this)"></div><div class="dot" data-accent="cyan" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)" onclick="setAccent('cyan',this)"></div><div class="dot" data-accent="white" style="background:linear-gradient(135deg,#fff,#a8b4d0)" onclick="setAccent('white',this)"></div></div></div>
+<div class="card"><h3>🎨 Accent Color</h3><div class="accent-grid"><div class="dot active" data-accent="rose" style="background:linear-gradient(135deg,#fb7185,#e11d48)" onclick="setAccent('rose',this)"></div><div class="dot" data-accent="indigo" style="background:linear-gradient(135deg,#7c8cff,#a88cff)" onclick="setAccent('indigo',this)"></div><div class="dot" data-accent="emerald" style="background:linear-gradient(135deg,#34d399,#10b981)" onclick="setAccent('emerald',this)"></div><div class="dot" data-accent="amber" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" onclick="setAccent('amber',this)"></div><div class="dot" data-accent="cyan" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)" onclick="setAccent('cyan',this)"></div><div class="dot" data-accent="white" style="background:linear-gradient(135deg,#fff,#a8b4d0)" onclick="setAccent('white',this)"></div></div></div>
 
-<div class="card"><button class="btn btn-primary" onclick="saveAll()">Save All • Built by Deris</button></div>
+<div class="card"><button class="btn btn-primary" onclick="saveAll()">Save All • Built by Deris</button><div style="text-align:center;margin-top:12px;font-size:11px;color:var(--muted);font-family:Geist Mono,monospace">Lumi • Unisex • v1.0 by Deris • <span id="ver"></span></div></div>
 </div>
 </div>
 
 <script>
 let synth=window.speechSynthesis; let voices=[];
 function getSettings(){try{return JSON.parse(localStorage.getItem("lumi_ultimate_settings")||"{}")}catch{return{}}}
-let s={user_name:"",user_avatar:"YOU",accent:"rose",talk_style:"professional",lang:"english",reply_length:"normal",context_window:"50",use_emoji:true,haptic:true,save_history:true,custom_prompt:"",tts_prompt:"Talk like bold JARVIS, confident, slight Nigerian vibe, deep, say sir",wake_enabled:false,wake_words:"hey lumi, hello lumi, ok lumi, lumi",overlay_enabled:true,auto_tts:false,phone_control:true,chrome_voice:"",tts_rate:"1",tts_pitch:"0.8",tts_volume:"1",...getSettings()};
-function save(){localStorage.setItem("lumi_ultimate_settings",JSON.stringify(s));}
+let s={user_name:"",user_avatar:"YOU",accent:"rose",talk_style:"professional",lang:"english",reply_length:"normal",context_window:"50",use_emoji:true,haptic:true,save_history:true,custom_prompt:"",tts_prompt:"Talk warm, confident, unisex, helpful, concise when needed",wake_enabled:false,wake_words:"hey lumi, hello lumi, ok lumi, lumi",overlay_enabled:true,auto_tts:false,phone_control:true,chrome_voice:"",tts_rate:"1",tts_pitch:"0.8",tts_volume:"1",...getSettings()};
+function save(){
+  localStorage.setItem("lumi_ultimate_settings",JSON.stringify(s));
+  try{ if(typeof Android!=='undefined' && Android.saveSetting){ Android.saveSetting("lumi_ultimate_settings", JSON.stringify(s)); } }catch{}
+}
 function applyAccent(){const map={indigo:["#7c8cff","#a88cff"],emerald:["#34d399","#10b981"],rose:["#fb7185","#e11d48"],amber:["#fbbf24","#f59e0b"],cyan:["#22d3ee","#06b6d4"],white:["#fff","#a8b4d0"]};const c=map[s.accent]||map.rose;document.documentElement.style.setProperty("--accent",c[0]);document.documentElement.style.setProperty("--accent2",c[1]);document.querySelectorAll(".dot").forEach(d=>d.classList.toggle("active",d.dataset.accent===s.accent));}
-function updateKeyStatus(){const k=document.getElementById("groq_key").value.trim();const el=document.getElementById("keyStatus");if(k.startsWith("gsk_")&&k.length>20){el.textContent="✓ "+k.slice(0,14)+"...";el.className="key-status ok";}else{el.textContent="✕ paste gsk_...";el.className="key-status bad";}}
+function updateKeyStatus(){const k=document.getElementById("groq_key").value.trim();const el=document.getElementById("keyStatus");if(k.startsWith("gsk_")&&k.length>20){el.textContent="✓ Connected • "+k.slice(0,14)+"...";el.className="key-status ok";}else{el.textContent="✕ Paste your Groq key (gsk_...) to activate Lumi";el.className="key-status bad";}}
 window.autoSaveKey=()=>{const k=document.getElementById("groq_key").value.trim();if(k){localStorage.setItem("groq_key",k);s.groq_key=k;save();}updateKeyStatus();};
 window.setAccent=(a,el)=>{s.accent=a;applyAccent();document.querySelectorAll(".dot").forEach(d=>d.classList.remove("active"));el.classList.add("active");save();};
 window.setTalk=(v,el)=>{s.talk_style=v;document.querySelectorAll("[data-talk]").forEach(c=>c.classList.remove("active"));el.classList.add("active");save();};
 window.toggle=k=>{const el=document.getElementById(k);if(!el)return;el.classList.toggle("on");s[k]=el.classList.contains("on");save();if(k==="wake_enabled")updateWakeStatus();};
-window.requestAllPermissions=async()=>{try{await navigator.mediaDevices.getUserMedia({audio:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{} try{if("Notification" in window)await Notification.requestPermission();}catch{} try{await navigator.mediaDevices.getUserMedia({video:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{} document.getElementById("ttsStatus").textContent="✓ Permissions granted";};
+window.requestAllPermissions=async()=>{
+  try{
+    if(typeof Android!=='undefined' && Android.requestPermissions){
+      Android.requestPermissions();
+      document.getElementById("ttsStatus").textContent="✓ Android permissions requested";
+      return;
+    }
+  }catch{}
+  try{await navigator.mediaDevices.getUserMedia({audio:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{}
+  try{if("Notification" in window)await Notification.requestPermission();}catch{}
+  try{await navigator.mediaDevices.getUserMedia({video:true}).then(s=>s.getTracks().forEach(t=>t.stop()));}catch{}
+  document.getElementById("ttsStatus").textContent="✓ Permissions granted";
+};
 
-function loadVoices(){voices=synth.getVoices().filter(v=>v.lang.startsWith("en")); if(voices.length===0) voices=synth.getVoices(); const sel=document.getElementById("chrome_voice"); sel.innerHTML=""; voices.forEach((v,i)=>{const o=document.createElement("option"); o.value=i; o.textContent=`${v.name} (${v.lang})`; sel.appendChild(o);}); if(s.chrome_voice!==""&&voices[s.chrome_voice]) sel.value=s.chrome_voice; else if(voices.length>0){const def=voices.findIndex(v=>v.lang.includes("en-GB")&&v.name.toLowerCase().includes("male")); sel.value=def>0?def:0; s.chrome_voice=sel.value; save();} document.getElementById("voiceInfo").textContent=`${voices.length} voices - ${voices[sel.value]?.name||""}`; sel.onchange=()=>{s.chrome_voice=sel.value; save();};}
+function loadVoices(){voices=synth.getVoices().filter(v=>v.lang.startsWith("en")); if(voices.length===0) voices=synth.getVoices(); const sel=document.getElementById("chrome_voice"); sel.innerHTML=""; voices.forEach((v,i)=>{const o=document.createElement("option"); o.value=i; o.textContent=`${v.name} (${v.lang})`; sel.appendChild(o);}); if(s.chrome_voice!==""&&voices[s.chrome_voice]) sel.value=s.chrome_voice; else if(voices.length>0){const def=voices.findIndex(v=>v.lang.includes("en-GB")&&v.name.toLowerCase().includes("male")); sel.value=def>0?def:0; s.chrome_voice=sel.value; save();} document.getElementById("voiceInfo").textContent=`${voices.length} voices available • ${voices[sel.value]?.name||""} • Unisex mode`; sel.onchange=()=>{s.chrome_voice=sel.value; save(); document.getElementById("voiceInfo").textContent=`${voices.length} voices • ${voices[sel.value]?.name||""}`;};}
 if(synth.onvoiceschanged!==undefined) synth.onvoiceschanged=loadVoices; setTimeout(loadVoices,600);
-function updateWakeStatus(){const el=document.getElementById("wakeStatus"); if(s.wake_enabled){el.textContent="🎙️ Wake ON - Say: "+s.wake_words+" - Keep tab open"; el.className="key-status ok";} else {el.textContent="Wake OFF - Turn on to use Hey Lumi on web"; el.className="key-status bad";}}
+function updateWakeStatus(){const el=document.getElementById("wakeStatus"); if(s.wake_enabled){el.textContent="🎙️ Wake ON • Say: "+s.wake_words+" • Keep tab open"; el.className="key-status ok";} else {el.textContent="Wake OFF • Turn on to use Hey Lumi"; el.className="key-status bad";}}
 window.testChromeVoice=()=>{
   const txt=document.getElementById("testText").value.trim(); const prompt=document.getElementById("tts_prompt").value.trim();
   const rate=parseFloat(document.getElementById("tts_rate").value); const pitch=parseFloat(document.getElementById("tts_pitch").value); const vol=parseFloat(document.getElementById("tts_volume").value); const vIndex=parseInt(document.getElementById("chrome_voice").value)||0;
   s.tts_rate=rate.toString(); s.tts_pitch=pitch.toString(); s.tts_volume=vol.toString(); s.chrome_voice=vIndex.toString(); s.tts_prompt=prompt; save();
   if(synth.speaking) synth.cancel(); const u=new SpeechSynthesisUtterance(txt); u.rate=rate; u.pitch=pitch; u.volume=vol; if(voices[vIndex]) u.voice=voices[vIndex];
-  const orb=document.getElementById("testOrb"); orb.classList.add("speaking"); document.getElementById("ttsStatus").textContent=`🔊 Speaking with prompt: ${prompt.slice(0,50)}...`;
+  const orb=document.getElementById("testOrb"); orb.classList.add("speaking"); document.getElementById("ttsStatus").textContent=`🔊 Speaking • ${prompt.slice(0,60)}...`;
   u.onend=()=>{orb.classList.remove("speaking"); document.getElementById("ttsStatus").textContent="✓ Done";}; u.onerror=()=>{orb.classList.remove("speaking");}; synth.speak(u);
 };
 ["tts_rate","tts_pitch","tts_volume"].forEach(id=>{document.getElementById(id).addEventListener("input",e=>{s[id]=e.target.value; if(id==="tts_rate")document.getElementById("rateVal").textContent=e.target.value+"x"; if(id==="tts_pitch")document.getElementById("pitchVal").textContent=e.target.value; if(id==="tts_volume")document.getElementById("volVal").textContent=Math.round(e.target.value*100)+"%"; save();});});
@@ -128,10 +166,12 @@ function loadAll(){
   document.getElementById("tts_rate").value=s.tts_rate||1; document.getElementById("rateVal").textContent=(s.tts_rate||1)+"x"; document.getElementById("tts_pitch").value=s.tts_pitch||"0.8"; document.getElementById("pitchVal").textContent=s.tts_pitch||"0.8"; document.getElementById("tts_volume").value=s.tts_volume||1; document.getElementById("volVal").textContent=Math.round((s.tts_volume||1)*100)+"%";
   ["overlay_enabled","auto_tts","phone_control","wake_enabled","use_emoji","haptic","save_history"].forEach(k=>{const el=document.getElementById(k); if(el) el.classList.toggle("on",s[k]===true);});
   document.querySelectorAll("[data-talk]").forEach(c=>c.classList.toggle("active",c.dataset.talk===s.talk_style)); applyAccent(); updateKeyStatus(); updateWakeStatus();
+  document.getElementById("ver").textContent=new Date().toLocaleDateString();
 }
 window.saveAll=()=>{
   s.user_name=document.getElementById("user_name").value.trim(); s.user_avatar=(document.getElementById("user_avatar").value.trim()||"YOU").slice(0,3).toUpperCase(); s.custom_prompt=document.getElementById("custom_prompt").value.trim(); s.tts_prompt=document.getElementById("tts_prompt").value.trim(); s.wake_words=document.getElementById("wake_words").value.trim().toLowerCase(); s.lang=document.getElementById("lang").value; s.reply_length=document.getElementById("reply_length").value; s.context_window=document.getElementById("context_window").value; s.tts_rate=document.getElementById("tts_rate").value; s.tts_pitch=document.getElementById("tts_pitch").value; s.tts_volume=document.getElementById("tts_volume").value; s.chrome_voice=document.getElementById("chrome_voice").value;
-  const k=document.getElementById("groq_key").value.trim(); if(k){localStorage.setItem("groq_key",k); s.groq_key=k;} save(); document.getElementById("ttsStatus").textContent="✓ All Saved!"; updateWakeStatus();
+  const k=document.getElementById("groq_key").value.trim(); if(k){localStorage.setItem("groq_key",k); s.groq_key=k;} save(); document.getElementById("ttsStatus").textContent="✓ All Saved! Matches index.html"; updateWakeStatus();
+  setTimeout(()=>location.href='index.html',600);
 };
 loadAll();
 </script>
