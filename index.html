@@ -77,10 +77,10 @@ textarea{flex:1;min-height:24px;max-height:120px;resize:none;border:0;outline:0;
 .google-card img{width:100%;height:190px;object-fit:cover;display:block}
 .save-btn{position:absolute;bottom:6px;right:6px;padding:6px 10px;border-radius:100px;background:rgba(0,0,0,.7);color:#fff;font-size:11px;cursor:pointer}
 .res-tag{position:absolute;top:6px;left:6px;padding:3px 6px;border-radius:6px;background:rgba(251,113,133,.9);color:#fff;font-size:9px;font-weight:700}
-#floatingOrbWrap{display:none;position:fixed;inset:0;z-index:999999;pointer-events:none;background:transparent!important}
-#floatingOrbWrap.show{display:block;pointer-events:none;background:transparent!important}
-#floatingOrb{position:absolute;left:50%;top:50%;width:96px;height:96px;border-radius:50%;pointer-events:auto;background:radial-gradient(circle at 32% 28%, #fff 0%, var(--accent) 35%, var(--accent2) 65%, #1a1033 88%);box-shadow:0 0 0 1px rgba(255,255,255,.15) inset, 0 0 30px var(--accent), 0 0 60px color-mix(in srgb,var(--accent) 45%, transparent);animation:orbFloat 5s ease-in-out infinite, orbGlow 3.5s ease-in-out infinite;touch-action:none;cursor:grab}
-#floatingOrbStatus{position:absolute;top:112%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);padding:6px 12px;border-radius:100px;font-size:11px;color:#fff;white-space:nowrap;backdrop-filter:blur(10px);pointer-events:none}
+#floatingOrbWrap{display:none;position:fixed;inset:0;z-index:999999;pointer-events:none!important;background:transparent!important}
+#floatingOrbWrap.show{display:block;pointer-events:none!important;background:transparent!important}
+#floatingOrb{position:absolute;left:50%;top:50%;width:96px;height:96px;border-radius:50%;pointer-events:auto!important;background:radial-gradient(circle at 32% 28%, #fff 0%, var(--accent) 35%, var(--accent2) 65%, #1a1033 88%);box-shadow:0 0 0 1px rgba(255,255,255,.15) inset, 0 0 30px var(--accent), 0 0 60px color-mix(in srgb,var(--accent) 45%, transparent);animation:orbFloat 5s ease-in-out infinite, orbGlow 3.5s ease-in-out infinite;touch-action:none;cursor:grab}
+#floatingOrbStatus{position:absolute;top:112%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);padding:6px 12px;border-radius:100px;font-size:11px;color:#fff;white-space:nowrap;backdrop-filter:blur(10px);pointer-events:none!important}
 .overlay-mode.topbar,.overlay-mode.hero,.overlay-mode.scroll-down,.overlay-mode #voiceStage{display:none!important}
 .overlay-mode #chat{display:flex!important}
 .overlay-mode.composer-wrap{display:block!important}
@@ -131,7 +131,7 @@ window.speakLumi=window.LumiPiper.speak;
 const chat=document.getElementById("chat"),input=document.getElementById("input"),hero=document.getElementById("hero"),scrollBtn=document.getElementById("scrollBtn"),composerWrap=document.getElementById("composerWrap");
 let conversations=JSON.parse(localStorage.getItem("lumi_conversations")||"[]");
 let recognition=null,finalTranscript="",isListening=false,replyTo=null,replyToType=null;
-const SERPER_KEY="YOUR_SERPER_KEY";const isNativeApp=typeof Android!=='undefined';const urlParams=new URLSearchParams(window.location.search);const isOverlayMode=urlParams.get("overlay")==="true"||urlParams.get("mode")==="overlay";
+const isNativeApp=typeof Android!=='undefined';const urlParams=new URLSearchParams(window.location.search);const isOverlayMode=urlParams.get("overlay")==="true"||urlParams.get("mode")==="overlay";
 function getSettings(){try{return JSON.parse(localStorage.getItem("lumi_ultimate_settings")||"{}")}catch{return{}}}
 function getKey(){const s=getSettings();return (localStorage.getItem("groq_key")||s.groq_key||"").trim()}
 function save(){const s=getSettings();if(s.save_history===false)return;localStorage.setItem("lumi_conversations",JSON.stringify(conversations.slice(-1000)))}
@@ -142,7 +142,7 @@ function onInputFocus(){setTimeout(()=>chat.scrollTo({top:chat.scrollHeight,beha
 function applySettings(){const s=getSettings();const map={indigo:["#7c8cff","#a88cff"],emerald:["#34d399","#10b981"],rose:["#fb7185","#e11d48"],amber:["#fbbf24","#f59e0b"],cyan:["#22d3ee","#06b6d4"],white:["#ffffff","#a8b4d0"]};const c=map[s.accent]||map.rose;document.documentElement.style.setProperty('--accent',c[0]);document.documentElement.style.setProperty('--accent2',c[1]);const bn=document.getElementById("brandName");if(bn)bn.textContent=(s.user_name?"Lumi • "+s.user_name:"Lumi")}
 function escapeHtml(str){return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function copyCode(btn,id){const el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(()=>{btn.textContent="Copied ✓";setTimeout(()=>{btn.textContent="Copy"},1200)})}
-function highlightCode(code){let h=escapeHtml(code);h=h.replace(/(&lt;!DOCTYPE[\s\S]*?&gt;)/gi,'<span>$1</span>');h=h.replace(/(&lt;!--[\s\S]*?--&gt;)/g,'<span>$1</span>');return h}
+function highlightCode(code){let h=escapeHtml(code);return h}
 function formatLumi(raw){const blocks=[];let t=raw;t=t.replace(/```(\w+)?\n?([\s\S]*?)```/g,(m,l,c)=>{const id="c_"+Math.random().toString(36).slice(2,7);blocks.push({id,lang:l||"html",code:c.trim()});return `__CODE_${blocks.length-1}__`});t=escapeHtml(t).replace(/\*\*(.*?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');blocks.forEach((b,i)=>{const hl=highlightCode(b.code);const html=`<div class="code-wrap"><div class="code-head"><div><b>${b.lang} code</b></div><button class="copy-btn" onclick="copyCode(this,'${b.id}')">Copy</button></div><pre class="code-block" id="${b.id}">${hl}</pre></div>`;t=t.replace(`__CODE_${i}__`,html)});return t}
 function isMobile(){return /Android|iPhone|iPad/i.test(navigator.userAgent)||window.innerWidth<768}
 function handleKey(e){if(e.key==='Enter'&&!isMobile()&&!e.shiftKey){e.preventDefault();sendMessage()}}
@@ -150,8 +150,8 @@ async function lumiSpeak(text){if(!text)return;const s=getSettings();if(s.auto_t
 function initRec(){
   if(isNativeApp){
     return {
-      start:()=>{ try{ if(typeof Android!=='undefined') Android.startVoice(); }catch{} },
-      stop:()=>{ try{ if(typeof Android!=='undefined') Android.stopVoice(); }catch{} }
+      start:()=>{ try{ if(typeof Android!=='undefined' && Android.startVoice) Android.startVoice(); }catch{} },
+      stop:()=>{ try{ if(typeof Android!=='undefined' && Android.stopVoice) Android.stopVoice(); }catch{} }
     };
   }
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -201,7 +201,6 @@ if(saveMem){conversations.push({text:t,type,time:displayTime,reply:replyContext|
 function checkScrollBtn(){const nearBottom=chat.scrollHeight-chat.scrollTop-chat.clientHeight<250;if(nearBottom)scrollBtn.classList.remove('show');else scrollBtn.classList.add('show')}
 chat.addEventListener('scroll',checkScrollBtn);
 let torchTrack=null;
-async function requestAllPermissions(){try{const perm=await navigator.permissions.query({name:'microphone'}); if(perm.state!=='granted'){ try{ await navigator.mediaDevices.getUserMedia({audio:true}).then(s=>s.getTracks().forEach(t=>t.stop())); }catch{} } }catch{}}
 let cameraStream=null;
 async function takePhotoIn5Sec(){
   try{
@@ -268,20 +267,19 @@ async function handleJarvisCommands(low, original){
       if(typeof Android!=='undefined'){try{Android.toggleFlashlight(false); return "🔦 Flashlight off";}catch{}}
       if(torchTrack){torchTrack.stop(); torchTrack=null; return "🔦 Torch off";} return "🔦 Torch already off";
   }
-  if(has("screenshot","screen shot","capture screen","take screenshot")){
-    return await takeScreenshot();
-  }
-  if(has("take photo","take picture","selfie","snap photo")){
-    return await takePhotoIn5Sec();
-  }
+  if(has("screenshot","screen shot","capture screen","take screenshot")){ return await takeScreenshot(); }
+  if(has("take photo","take picture","selfie","snap photo")){ return await takePhotoIn5Sec(); }
   if(has("volume up","increase volume","louder","max volume")){
-    if(typeof Android!=='undefined'){try{Android.setVolume(15);}catch{}} return "🔊 Volume up";
+    if(typeof Android!=='undefined'){try{Android.setVolume(12);}catch{}} return "🔊 Volume up";
   }
-  if(has("volume down","decrease volume","lower volume","low volume")){
-    if(typeof Android!=='undefined'){try{Android.setVolume(2);}catch{}} return "🔉 Volume down";
+  if(has("volume down","decrease volume","lower volume")){
+    if(typeof Android!=='undefined'){try{Android.setVolume(4);}catch{}} return "🔉 Volume down";
   }
-  if(has("mute","silent")){
+  if(has("mute") &&!low.includes("unmute")){
     if(typeof Android!=='undefined'){try{Android.setVolume(0);}catch{}} return "🔇 Muted";
+  }
+  if(has("unmute","volume normal")){
+    if(typeof Android!=='undefined'){try{Android.setVolume(7);}catch{}} return "🔊 Unmuted";
   }
   if(has("play music","resume music","play song")){
     if(typeof Android!=='undefined'){try{Android.controlMusic("play");}catch{}} return "🎵 Playing";
@@ -321,11 +319,52 @@ async function handleJarvisCommands(low, original){
 }
 let inactivityTimer=null;
 function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(()=>{const orb=document.getElementById("floatingOrb");if(orb){orb.style.transition="all 0.6s ease";orb.style.transform="translate(-50%,-50%) scale(0.3)";orb.style.opacity="0.3"}setTimeout(()=>{if(isNativeApp){try{Android.closeOverlay()}catch{}}else{hidePngOrb()}},500)},15000)}
-function setupDraggableOrb(){const orb=document.getElementById("floatingOrb");if(!orb || orb.dataset.dragSetup) return;orb.dataset.dragSetup="1";let isDragging=false, startX, startY, initialLeft, initialTop, hasMoved=false;orb.addEventListener("touchstart",(e)=>{isDragging=true; hasMoved=false; startX=e.touches[0].clientX; startY=e.touches[0].clientY;const rect=orb.getBoundingClientRect();initialLeft=rect.left; initialTop=rect.top;orb.style.transition="none";resetInactivityTimer();},{passive:false});orb.addEventListener("touchmove",(e)=>{if(!isDragging) return;e.preventDefault();let dx=e.touches[0].clientX-startX;let dy=e.touches[0].clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5) hasMoved=true;orb.style.left=(initialLeft+dx)+"px";orb.style.top=(initialTop+dy)+"px";orb.style.transform="none";resetInactivityTimer();},{passive:false});orb.addEventListener("touchend",()=>{isDragging=false;orb.style.transition="all 0.3s ease";if(!hasMoved){if(isListening){stopVoice();}else{toggleVoiceOverlay();}}resetInactivityTimer();});orb.addEventListener("mousedown",(e)=>{isDragging=true; hasMoved=false; startX=e.clientX; startY=e.clientY;const rect=orb.getBoundingClientRect();initialLeft=rect.left; initialTop=rect.top;orb.style.transition="none";});window.addEventListener("mousemove",(e)=>{if(!isDragging) return;let dx=e.clientX-startX; let dy=e.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5) hasMoved=true;orb.style.left=(initialLeft+dx)+"px";orb.style.top=(initialTop+dy)+"px";orb.style.transform="none";});window.addEventListener("mouseup",()=>{isDragging=false;});}
+function setupDraggableOrb(){
+  const orb=document.getElementById("floatingOrb");
+  if(!orb || orb.dataset.dragSetup) return;
+  orb.dataset.dragSetup="1";
+  let isDragging=false, startX, startY, initialLeft, initialTop, hasMoved=false;
+  function clamp(v,min,max){return Math.min(Math.max(v,min),max)}
+  orb.addEventListener("touchstart",(e)=>{
+    isDragging=true; hasMoved=false;
+    startX=e.touches[0].clientX; startY=e.touches[0].clientY;
+    const rect=orb.getBoundingClientRect();
+    initialLeft=rect.left; initialTop=rect.top;
+    orb.style.transition="none";
+    resetInactivityTimer();
+  },{passive:false});
+  orb.addEventListener("touchmove",(e)=>{
+    if(!isDragging) return;
+    e.preventDefault();
+    let dx=e.touches[0].clientX-startX; let dy=e.touches[0].clientY-startY;
+    if(Math.abs(dx)>5||Math.abs(dy)>5) hasMoved=true;
+    let nl=clamp(initialLeft+dx,0,window.innerWidth-96);
+    let nt=clamp(initialTop+dy,0,window.innerHeight-96);
+    orb.style.left=nl+"px"; orb.style.top=nt+"px"; orb.style.transform="none";
+    resetInactivityTimer();
+  },{passive:false});
+  orb.addEventListener("touchend",()=>{
+    isDragging=false; orb.style.transition="all 0.3s ease";
+    if(!hasMoved){ if(isListening){stopVoice();}else{toggleVoiceOverlay();} }
+    resetInactivityTimer();
+  });
+  orb.addEventListener("mousedown",(e)=>{
+    isDragging=true; hasMoved=false; startX=e.clientX; startY=e.clientY;
+    const rect=orb.getBoundingClientRect(); initialLeft=rect.left; initialTop=rect.top; orb.style.transition="none";
+  });
+  window.addEventListener("mousemove",(e)=>{
+    if(!isDragging) return;
+    let dx=e.clientX-startX; let dy=e.clientY-startY;
+    if(Math.abs(dx)>5||Math.abs(dy)>5) hasMoved=true;
+    let nl=clamp(initialLeft+dx,0,window.innerWidth-96);
+    let nt=clamp(initialTop+dy,0,window.innerHeight-96);
+    orb.style.left=nl+"px"; orb.style.top=nt+"px"; orb.style.transform="none";
+  });
+  window.addEventListener("mouseup",()=>{isDragging=false;});
+}
 async function toggleVoiceOverlay(){if(isListening){stopVoice();return}finalTranscript="";isListening=true;showPngOrb("Listening...");if(!recognition) recognition=initRec();if(recognition) try{recognition.start()}catch{isListening=false}resetInactivityTimer();}
 window.onWakeWordDetected=function(){const wrap=document.getElementById("floatingOrbWrap");if(wrap){wrap.classList.add("show");wrap.classList.remove("png-mode");}document.body.classList.add("overlay-mode");setupDraggableOrb();const status=document.getElementById("floatingOrbStatus");if(status) status.textContent="Listening...";lumiSpeak("Yes? I'm listening");setTimeout(()=>{if(!isListening) toggleVoiceOverlay()},700);resetInactivityTimer();}
 function handleOverlayVoiceResult(text){if(!text.trim()) return;conversations.push({text:text,type:"user",time:nowTime()}); save();(async()=>{const status=document.getElementById("floatingOrbStatus");if(status) status.textContent="Thinking...";const reply=await callLumi(text);conversations.push({text:reply,type:"lumi",time:nowTime()}); save();lumiSpeak(reply);if(status) status.textContent="Tap orb to speak again";resetInactivityTimer();if(!isOverlayMode){addUI(text,"user",null,true,nowTime());addUI(reply,"lumi",null,true,nowTime());setTimeout(()=>{hidePngOrb();},3000);}})();}
-document.addEventListener("visibilitychange",()=>{if(isNativeApp){try{if(document.visibilityState==="visible")Android.onAppForeground();else Android.onAppBackground()}catch{}}});
 async function fetchGoogleText(query){let res="";try{const r=await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`);const d=await r.json();res=d.AbstractText||d.Answer||d.Results?.[0]?.Text||d.RelatedTopics?.[0]?.Text||""}catch{}if(!res){try{const w=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);const j=await w.json();res=j.extract||""}catch{}}return res||`No summary for "${query}".`}
 async function fetchGoogleImages(query){let images=[];const seed=Math.floor(Math.random()*10000);images=[`https://image.pollinations.ai/prompt/${encodeURIComponent(query)}?width=1920&height=1080&nologo=true&enhance=true&seed=${seed}`,`https://image.pollinations.ai/prompt/${encodeURIComponent(query+" ultra realistic 8k")}?width=1920&height=1080&nologo=true&seed=${seed+1}`,`https://loremflickr.com/1920/1080/${encodeURIComponent(query)}?lock=${seed}`,`https://picsum.photos/seed/${encodeURIComponent(query)}${seed}/1920/1080`];let html=`<div>🌍 Google Images • <b>${escapeHtml(query)}</b> • 1080p</div><div class="google-grid">`;images.forEach((url,i)=>{const safeUrl=url.replace(/'/g,"%27");html+=`<div class="google-card"><span class="res-tag">1080p</span><img src="${safeUrl}" loading="lazy" onclick="window.open('${safeUrl}','_blank')"><button class="save-btn" onclick="saveToDevice('${safeUrl}','${escapeHtml(query)}_${i}')">⬇️ Save</button></div>`});html+=`</div>`;return html}
 function getTime(){return new Date().toLocaleString('en-NG',{timeZone:'Africa/Lagos',weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true})+" WAT"}
@@ -370,7 +409,7 @@ function startWebWake(){
   }catch(e){}
 }
 function stopWebWake(){ if(wakeRec){try{wakeRec.stop()}catch{} isWakeListening=false;}}
-function load(){applySettings();requestAllPermissions();if(isOverlayMode){document.body.classList.add("overlay-mode");document.documentElement.classList.add("overlay-mode");document.getElementById("floatingOrbWrap").classList.add("show");setupDraggableOrb();resetInactivityTimer()}if(conversations.length&&!isOverlayMode){hero.style.display="none";conversations.forEach(c=>{const isGrid=c.text.includes("google-grid");if(isGrid){const row=document.createElement("div");row.className="message "+c.type;row.innerHTML=c.type==="lumi"?`<div class="avatar lumi-avatar"><span class="lumi-avatar-inner"></span></div><div class="bubble lumi-bubble"><span class="bubble-text">${c.text}</span><span class="bubble-time">${c.time||nowTime()}</span></div>`:`<div class="bubble user-bubble"><span class="bubble-text">${escapeHtml(c.text)}</span><span class="bubble-time">${c.time||nowTime()}</span></div><div class="avatar user-avatar">YOU</div>`;chat.appendChild(row);attachSwipe(row,c.text,c.type)}else{addUI(c.text,c.type,c.reply||null,false,c.time||nowTime(),c.replyType||null)}})}const params=new URLSearchParams(window.location.search);if(params.get("wake")==="true"||localStorage.getItem("lumi_wake_trigger")==="1"){localStorage.removeItem("lumi_wake_trigger");setTimeout(()=>{if(window.onWakeWordDetected)window.onWakeWordDetected()},600)} setTimeout(startWebWake,1500);}
+function load(){applySettings();if(isOverlayMode){document.body.classList.add("overlay-mode");document.documentElement.classList.add("overlay-mode");document.getElementById("floatingOrbWrap").classList.add("show");setupDraggableOrb();resetInactivityTimer()}if(conversations.length&&!isOverlayMode){hero.style.display="none";conversations.forEach(c=>{const isGrid=c.text.includes("google-grid");if(isGrid){const row=document.createElement("div");row.className="message "+c.type;row.innerHTML=c.type==="lumi"?`<div class="avatar lumi-avatar"><span class="lumi-avatar-inner"></span></div><div class="bubble lumi-bubble"><span class="bubble-text">${c.text}</span><span class="bubble-time">${c.time||nowTime()}</span></div>`:`<div class="bubble user-bubble"><span class="bubble-text">${escapeHtml(c.text)}</span><span class="bubble-time">${c.time||nowTime()}</span></div><div class="avatar user-avatar">YOU</div>`;chat.appendChild(row);attachSwipe(row,c.text,c.type)}else{addUI(c.text,c.type,c.reply||null,false,c.time||nowTime(),c.replyType||null)}})}const params=new URLSearchParams(window.location.search);if(params.get("wake")==="true"||localStorage.getItem("lumi_wake_trigger")==="1"){localStorage.removeItem("lumi_wake_trigger");setTimeout(()=>{if(window.onWakeWordDetected)window.onWakeWordDetected()},600)} setTimeout(startWebWake,1500);}
 function suggest(t){input.value=t;autoGrow(input);sendMessage()}
 function clearMem(){if(confirm("Clear all chats?")){localStorage.removeItem("lumi_conversations");location.reload()}}
 window.saveToDevice=async function(url,name){try{if(isNativeApp&&Android.saveImage){Android.saveImage(url,name);if(!isOverlayMode)addUI(`✅ Saving ${name}...`, "lumi", null, false);return}const res=await fetch(url);const blob=await res.blob();const blobUrl=URL.createObjectURL(blob);const a=document.createElement("a");a.href=blobUrl;a.download=name.replace(/[^a-z0-9]/gi,"_")+"_1080p.jpg";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(blobUrl),2000)}catch(e){window.open(url,"_blank")}}
