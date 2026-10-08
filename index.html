@@ -191,6 +191,9 @@ let cameraStream=null;
 async function takePhotoIn5Sec(){
   try{
     hidePngOrb();
+    if(!navigator.mediaDevices ||!navigator.mediaDevices.getUserMedia){
+      return "⚠️ Camera not supported on this device";
+    }
     const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"},audio:false});
     cameraStream=stream;
     let v=document.getElementById("_lumiCam");
@@ -202,8 +205,10 @@ async function takePhotoIn5Sec(){
       document.body.appendChild(v);
     }
     v.srcObject=stream;
+    showPngOrb("📸 Starting...");
     for(let i=5;i>0;i--){
-      if(document.getElementById("floatingOrbStatus")) document.getElementById("floatingOrbStatus").textContent=`📸 ${i}...`;
+      const st=document.getElementById("floatingOrbStatus");
+      if(st) st.textContent=`📸 ${i}... smile!`;
       await new Promise(r=>setTimeout(r,1000));
     }
     const canvas=document.createElement("canvas");
@@ -215,7 +220,8 @@ async function takePhotoIn5Sec(){
     }else{
       const a=document.createElement("a"); a.href=dataUrl; a.download="lumi_photo_"+Date.now()+".jpg"; a.click();
     }
-    if(document.getElementById("floatingOrbStatus")) document.getElementById("floatingOrbStatus").textContent="✅ Saved!";
+    const st2=document.getElementById("floatingOrbStatus");
+    if(st2) st2.textContent="✅ Saved!";
     setTimeout(()=>{
       if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null;}
       const vv=document.getElementById("_lumiCam"); if(vv) vv.remove();
@@ -223,8 +229,11 @@ async function takePhotoIn5Sec(){
     },2000);
     return "📸 Photo saved!";
   }catch(e){
-    if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());}
-    return "⚠️ Camera permission needed";
+    if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null;}
+    hidePngOrb();
+    if(e.name === 'NotAllowedError') return "⚠️ You denied camera permission — go to Settings > Allow Camera";
+    if(e.name === 'NotFoundError') return "⚠️ No camera found on this device";
+    return "⚠️ Camera error: " + (e.message||e.name||"unknown");
   }
 }
 async function takeScreenshot(){
@@ -271,7 +280,7 @@ function setupDraggableOrb(){
   },{passive:false});
   orb.addEventListener("touchend",()=>{
     isDragging=false; orb.style.transition="all 0.3s ease";
-    if(!hasMoved){ if(isListening){stopVoice();}else{toggleVoiceOverlay();} }
+    if(!hasMoved){ if(isListening){stopVoice();}else{toggleVoice();} }
     resetInactivityTimer();
   });
   orb.addEventListener("mousedown",(e)=>{
@@ -290,7 +299,7 @@ function setupDraggableOrb(){
 }
 async function callLumi(userText){
   const KEY=getKey();
-  if(!KEY || !KEY.startsWith("gsk_")) return "⚠️ No API key — Go to Settings and paste your gsk_ key.";
+  if(!KEY ||!KEY.startsWith("gsk_")) return "⚠️ No API key — Go to Settings and paste your gsk_ key.";
   const settings=getSettings();
   const time=nowTime();
   const recent=conversations.slice(-Math.min(Number(settings.context_window||50),30)).filter(c=>!String(c.text).includes("google-grid"));
@@ -339,7 +348,6 @@ USER REQUEST: ${userText}`;
       if(!raw){lastError="Empty AI response";continue;}
       const plan=parsePlan(raw);
       if(!plan){
-        // Never leave the user with a fake failure just because the model ignored the JSON wrapper.
         return raw;
       }
       if(plan.type==="task") return await executeTask(plan);
@@ -446,6 +454,14 @@ function friendlyAction(a,v){
 }
 async function executeAction(action,value,step){
   const a=String(action||"").toLowerCase();
+  // PHONE CONTROL CHECK
+  try{
+    const pc = getSettings().phone_control;
+    const phoneActions = ["flashlight","open_app","open_url","volume","brightness","media","alarm","dial","screenshot","photo","get_apps","clipboard_get","clipboard_set"];
+    if(pc===false && phoneActions.includes(a)){
+      return {status:"NEEDS_PERMISSION", message:"Phone Control is OFF — go to Settings and turn ON Phone Control to allow this."};
+    }
+  }catch(e){}
   try{
     if(a==="wait"){await waitMs(Number(value)||Number(step.wait_ms)||0);return {status:"SUCCESS",message:"Wait complete"}}
     if(a==="screenshot")return {status:"SUCCESS",message:await takeScreenshot()};
@@ -462,7 +478,7 @@ async function executeAction(action,value,step){
     if(a==="clipboard_get"){const v=window.Android?.getClipboard?Android.getClipboard():"";return {status:"SUCCESS",value:v,message:v?"Clipboard read.":"Clipboard is empty."}}
     if(a==="clipboard_set"){if(window.Android?.setClipboard)return statusFromNative(Android.setClipboard(value));return {status:"NOT_AVAILABLE",message:"Clipboard control isn't available."}}
     if(a==="get_apps"){const apps=window.Android?.getAllApps?Android.getAllApps():"";return {status:"SUCCESS",value:apps,message:apps?"Apps listed.":"App list unavailable."}}
-    if(a==="open_url"){if(window.window.Android?.openUrl)return statusFromNative(window.Android.openUrl(value));window.open(value,"_blank");return {status:"STARTED",message:"Opened link."}}
+    if(a==="open_url"){if(window.Android?.openUrl)return statusFromNative(window.Android.openUrl(value));window.open(value,"_blank");return {status:"STARTED",message:"Opened link."}}
     if(window.Android&&Android.executeAction){return statusFromNative(Android.executeAction(a,value))}
     if(a==="flashlight"&&window.Android?.toggleFlashlight){Android.toggleFlashlight(!/^off|false|0$/i.test(value));return {status:"STARTED",message:"Flashlight command sent."}}
     if(a==="volume"&&window.Android?.setVolume){const n=Math.max(0,Math.min(15,parseInt(value,10)));if(Number.isNaN(n))return {status:"NEEDS_USER",message:"Tell me the volume level."};Android.setVolume(n);return {status:"STARTED",message:`Volume set to ${n}/15`}}
