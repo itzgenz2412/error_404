@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Settings - Lumi by Deris</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#05070d;--line:rgba(255,255,255,.07);--text:#f5f6ff;--muted:#8c95b0;--accent:#fb7185;--accent2:#e11d48}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Geist,sans-serif;overflow:hidden;overscroll-behavior:none}
+body{display:flex;justify-content:center;background:radial-gradient(140% 90% at 50% -20%, color-mix(in srgb, var(--accent) 20%, #1a1f3d) 0%, #0e1120 25%, #05070d 60%)}
+.app{width:100%;max-width:780px;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex:none;backdrop-filter:blur(40px) saturate(180%);background:rgba(8,10,20,.65);border-bottom:1px solid var(--line);z-index:10}
+.brand{display:flex;align-items:center;gap:14px}
+.logo-wrap{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, #1a1e38), #10122a);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center}
+.mini-orb{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 30% 25%, #fff 0%, var(--accent) 45%, var(--accent2) 80%);box-shadow:0 0 12px var(--accent),0 0 24px color-mix(in srgb,var(--accent) 50%, transparent);animation:miniBreathe 3s ease-in-out infinite}
+@keyframes miniBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.back{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#d0d6ec;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.back:active{transform:scale(.92)}
+.content{flex:1;overflow-y:auto;padding:16px 14px 40px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.content::-webkit-scrollbar{display:none}
+.card{background:linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:18px;margin-bottom:16px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)}
+.card h3{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;font-family:Geist Mono,monospace;display:flex;align-items:center;gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);gap:12px}
+.row:last-child{border-bottom:0}
+.label{font-size:14px;font-weight:500;line-height:1.2}.hint{font-size:11.5px;color:var(--muted);margin-top:3px;font-family:Geist Mono,monospace}
+.input,.select,textarea{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;color:#fff;font-size:13.5px;outline:0;font-family:Geist,sans-serif;transition:.2s}
+.input:focus,.select:focus,textarea:focus{border-color:var(--accent);background:rgba(0,0,0,.5);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent)}
+textarea{resize:none;line-height:1.5}
+.switch{width:46px;height:28px;background:rgba(255,255,255,.08);border-radius:100px;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:.25s;flex:none}
+.switch.on{background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 12px color-mix(in srgb, var(--accent) 50%, transparent)}
+.switch:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.25s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.switch.on:after{transform:translateX(18px)}
+.btn{width:100%;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer;transition:.2s;font-family:Geist,sans-serif}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,var(--accent) 0%, var(--accent2) 100%);border:0;box-shadow:0 6px 20px color-mix(in srgb, var(--accent) 40%, transparent)}
+.key-status{font-size:11px;margin-top:8px;font-family:Geist Mono,monospace;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.3)}
+.key-status.ok{color:#22c55e;border:1px solid rgba(34,197,94,.2);background:rgba(34,197,94,.08)}
+.key-status.bad{color:#fb7185;border:1px solid rgba(251,113,133,.2);background:rgba(251,113,133,.08)}
+.pref-chip{display:inline-flex;align-items:center;padding:8px 14px;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;margin:4px;cursor:pointer;transition:.2s;font-weight:500}
+.pref-chip.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff;box-shadow:0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent)}
+.dot{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s;position:relative}
+.dot.active{border-color:#fff;transform:scale(1.1);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent), 0 4px 12px rgba(0,0,0,.3)}
+.accent-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><button class="back" onclick="location.href='index.html'">←</button><div class="brand"><div class="logo-wrap"><div class="mini-orb"></div></div><div style="font-weight:600;font-size:14px">Settings</div></div><div style="width:40px"></div></div>
+<div class="content">
+<div class="card"><h3>🔑 Account</h3>
+<div class="row"><div><div class="label">Your name</div><div class="hint">Shown on Lumi header</div></div><div style="width:150px"><input id="user_name" class="input" placeholder="Your name"></div></div>
+<div class="row"><div><div class="label">Avatar</div><div class="hint">3 letters max</div></div><div style="width:150px"><input id="user_avatar" class="input" maxlength="3" placeholder="YOU"></div></div>
+<div class="row" style="flex-direction:column;align-items:stretch;gap:10px"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="label">Groq API Key</div><div class="hint">gsk_...</div></div><div style="width:170px;display:flex;gap:6px"><input id="groq_key" type="password" class="input" oninput="autoSaveKey()" style="font-family:Geist Mono,monospace;font-size:11px" placeholder="gsk_..."><button onclick="toggleKey()" style="width:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;cursor:pointer">👁</button></div></div><div id="keyStatus" class="key-status bad">✕ paste gsk_...</div></div>
+</div>
+<div class="card"><h3>⚙️ Preferences</h3>
+<div class="row"><div><div class="label">Language</div><div class="hint">Response style</div></div><select id="lang" class="select" style="width:150px"><option value="english">English</option><option value="pidgin">Pidgin</option><option value="yoruba">Yoruba mix</option><option value="mix">Mix</option></select></div>
+<div class="row"><div><div class="label">Reply Length</div></div><select id="reply_length" class="select" style="width:150px"><option value="normal">Normal</option><option value="short">Short</option><option value="long">Long detailed</option></select></div>
+<div class="row"><div><div class="label">Context Memory</div><div class="hint">Real limit 30</div></div><select id="context_window" class="select" style="width:90px"><option value="10">10</option><option value="20">20</option><option value="30">30</option></select></div>
+<div class="row"><div><div class="label">🎤 STT Timeout</div><div class="hint">How long mic listens before auto stop</div></div><select id="stt_timeout" class="select" style="width:150px"><option value="5">5 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds (default)</option><option value="30">30 seconds</option><option value="60">60 seconds</option><option value="continuous">Continuous / Manual stop</option></select></div>
+<div class="row"><div><div class="label">Phone Control</div><div class="hint">Allow flashlight, apps, etc</div></div><div class="switch on" id="phone_control" onclick="toggle('phone_control')"></div></div>
+<div class="row"><div><div class="label">Use Emoji</div><div class="hint">Add emoji in replies</div></div><div class="switch on" id="use_emoji" onclick="toggle('use_emoji')"></div></div>
+<div class="row"><div><div class="label">Haptic Feedback</div><div class="hint">Vibrate on swipe</div></div><div class="switch on" id="haptic" onclick="toggle('haptic')"></div></div>
+<div class="row"><div><div class="label">Save History</div><div class="hint">Keep chats locally</div></div><div class="switch on" id="save_history" onclick="toggle('save_history')"></div></div>
+</div>
+<div class="card"><h3>💬 Behavior</h3>
+<textarea id="custom_prompt" rows="3" placeholder="You are Lumi, bold, helpful, unisex assistant..."></textarea>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap"><span class="pref-chip active" data-talk="professional" onclick="setTalk('professional',this)">Professional</span><span class="pref-chip" data-talk="concise" onclick="setTalk('concise',this)">Concise</span><span class="pref-chip" data-talk="detailed" onclick="setTalk('detailed',this)">Detailed</span><span class="pref-chip" data-talk="friendly" onclick="setTalk('friendly',this)">Friendly</span><span class="pref-chip" data-talk="savage" onclick="setTalk('savage',this)">Savage</span></div>
+</div>
+<div class="card"><h3>🔐 Permissions</h3><div class="row"><button class="btn" onclick="requestAllPermissions()">🔐 Request Mic + Camera + Contacts</button></div><div id="permissionStatus" class="key-status ok">Permissions can be requested here</div></div>
+<div class="card"><h3>🎨 Accent Color</h3><div class="accent-grid"><div class="dot active" data-accent="rose" style="background:linear-gradient(135deg,#fb7185,#e11d48)" onclick="setAccent('rose',this)"></div><div class="dot" data-accent="indigo" style="background:linear-gradient(135deg,#7c8cff,#a88cff)" onclick="setAccent('indigo',this)"></div><div class="dot" data-accent="emerald" style="background:linear-gradient(135deg,#34d399,#10b981)" onclick="setAccent('emerald',this)"></div><div class="dot" data-accent="amber" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" onclick="setAccent('amber',this)"></div><div class="dot" data-accent="cyan" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)" onclick="setAccent('cyan',this)"></div><div class="dot" data-accent="white" style="background:linear-gradient(135deg,#fff,#a8b4d0)" onclick="setAccent('white',this)"></div></div></div>
+<div class="card"><button class="btn btn-primary" onclick="saveAll()">Save All • Built by Deris</button><div id="saveStatus" class="key-status ok" style="margin-top:10px">Settings are saved locally</div><div style="text-align:center;margin-top:12px;font-size:11px;color:var(--muted);font-family:Geist Mono,monospace">Lumi • v1.0 by Deris • <span id="ver"></span></div></div>
+</div>
+</div>
+<script>
+const DEFAULT_SETTINGS={
+  user_name:"",user_avatar:"YOU",accent:"rose",talk_style:"professional",lang:"english",
+  reply_length:"normal",context_window:"30",use_emoji:true,haptic:true,save_history:true,
+  custom_prompt:"",phone_control:true,groq_key:"",stt_timeout:"15",stt_continuous:false
+};
+function readStored(){
+  try{
+    const raw=localStorage.getItem("lumi_ultimate_settings");
+    if(raw){const parsed=JSON.parse(raw); if(parsed&&typeof parsed==="object") return parsed;}
+  }catch(e){}
+  try{
+    const backup=localStorage.getItem("lumi_settings_backup");
+    if(backup){const parsed=JSON.parse(backup); if(parsed&&typeof parsed==="object") return parsed;}
+  }catch(e){}
+  return {};
+}
+function getSettings(){
+  const stored=readStored();
+  const accentBackup=localStorage.getItem("lumi_accent");
+  const merged={...DEFAULT_SETTINGS,...stored};
+  if(!stored.accent && accentBackup) merged.accent=accentBackup;
+  if(!merged.groq_key){try{merged.groq_key=localStorage.getItem("groq_key")||"";}catch(e){}}
+  return merged;
+}
+let s=getSettings();
+function save(){
+  const data=JSON.stringify(s);
+  try{localStorage.setItem("lumi_ultimate_settings",data);}catch(e){}
+  try{localStorage.setItem("lumi_settings_backup",data);}catch(e){}
+  try{localStorage.setItem("lumi_accent",s.accent||"rose");}catch(e){}
+  if(s.groq_key){try{localStorage.setItem("groq_key",s.groq_key);}catch(e){}}
+  try{if(typeof Android!=="undefined"&&Android.saveSetting){Android.saveSetting("lumi_ultimate_settings",data);}}catch(e){}
+  return true;
+}
+function applyAccent(){
+  const map={indigo:["#7c8cff","#a88cff"],emerald:["#34d399","#10b981"],rose:["#fb7185","#e11d48"],amber:["#fbbf24","#f59e0b"],cyan:["#22d3ee","#06b6d4"],white:["#fff","#a8b4d0"]};
+  const c=map[s.accent]||map.rose;
+  document.documentElement.style.setProperty("--accent",c[0]);
+  document.documentElement.style.setProperty("--accent2",c[1]);
+  document.querySelectorAll(".dot").forEach(d=>d.classList.toggle("active",d.dataset.accent===s.accent));
+}
+function updateKeyStatus(){
+  const el=document.getElementById("groq_key"),status=document.getElementById("keyStatus");
+  const k=(el&&el.value?el.value:"").trim();
+  if(k.startsWith("gsk_")&&k.length>20){status.textContent="✓ Connected • "+k.slice(0,14)+"...";status.className="key-status ok";}
+  else{status.textContent="✕ Paste your Groq key (gsk_...)";status.className="key-status bad";}
+}
+window.toggleKey=()=>{
+  const el=document.getElementById("groq_key");
+  if(el) el.type = el.type==="password"? "text" : "password";
+}
+window.autoSaveKey=()=>{
+  s.groq_key=(document.getElementById("groq_key").value||"").trim();
+  save();updateKeyStatus();
+};
+window.setAccent=(a)=>{s.accent=a||"rose";applyAccent();save();};
+window.setTalk=(v)=>{
+  s.talk_style=v;
+  document.querySelectorAll("[data-talk]").forEach(c=>c.classList.toggle("active",c.dataset.talk===v));
+  save();
+};
+window.toggle=k=>{
+  const el=document.getElementById(k);if(!el)return;
+  const next=!el.classList.contains("on");
+  el.classList.toggle("on",next);s[k]=next;save();
+};
+window.requestAllPermissions=async()=>{
+  const st=document.getElementById("permissionStatus");
+  try{if(typeof Android!=="undefined"&&Android.requestPermissions){Android.requestPermissions(); if(st){st.textContent="✓ Android permissions requested (Mic/Camera/Contacts)"; st.className="key-status ok";} return;}}catch(e){}
+  let micOk=false, camOk=false, notifOk=false;
+  try{if(navigator.mediaDevices?.getUserMedia){const ms=await navigator.mediaDevices.getUserMedia({audio:true}); ms.getTracks().forEach(t=>t.stop()); micOk=true;}}catch(e){micOk=false;}
+  try{if("Notification" in window){const p=await Notification.requestPermission(); notifOk=p==="granted";}}catch(e){}
+  try{if(navigator.mediaDevices?.getUserMedia){const vs=await navigator.mediaDevices.getUserMedia({video:true}); vs.getTracks().forEach(t=>t.stop()); camOk=true;}}catch(e){camOk=false;}
+  if(st){
+    if(micOk&&camOk){st.textContent="✓ Mic & Camera granted"; st.className="key-status ok";}
+    else{st.textContent=`⚠️ Mic:${micOk?'ok':'denied'} Cam:${camOk?'ok':'denied'} Notif:${notifOk?'ok':'denied'}`; st.className="key-status bad";}
+  }
+};
+function loadAll(){
+  s=getSettings();
+  document.getElementById("user_name").value=s.user_name||"";
+  document.getElementById("user_avatar").value=s.user_avatar||"YOU";
+  document.getElementById("groq_key").value=s.groq_key||"";
+  document.getElementById("custom_prompt").value=s.custom_prompt||"";
+  document.getElementById("lang").value=s.lang||"english";
+  document.getElementById("reply_length").value=s.reply_length||"normal";
+  document.getElementById("context_window").value=s.context_window||"30";
+  document.getElementById("stt_timeout").value=s.stt_timeout||"15";
+  ["phone_control","use_emoji","haptic","save_history"].forEach(k=>{
+    const el=document.getElementById(k);if(el)el.classList.toggle("on",s[k]===true);
+  });
+  document.querySelectorAll("[data-talk]").forEach(c=>c.classList.toggle("active",c.dataset.talk===s.talk_style));
+  applyAccent();updateKeyStatus();
+  document.getElementById("ver").textContent=new Date().toLocaleDateString();
+}
+function collectForm(){
+  s.user_name=document.getElementById("user_name").value.trim();
+  s.user_avatar=(document.getElementById("user_avatar").value.trim()||"YOU").slice(0,3).toUpperCase();
+  s.groq_key=document.getElementById("groq_key").value.trim();
+  s.custom_prompt=document.getElementById("custom_prompt").value.trim();
+  s.lang=document.getElementById("lang").value;
+  s.reply_length=document.getElementById("reply_length").value;
+  s.context_window=document.getElementById("context_window").value;
+  s.stt_timeout=document.getElementById("stt_timeout").value;
+  s.stt_continuous=(s.stt_timeout==="continuous");
+  ["phone_control","use_emoji","haptic","save_history"].forEach(k=>{
+    const el=document.getElementById(k);if(el)s[k]=el.classList.contains("on");
+  });
+}
+window.saveAll=()=>{
+  collectForm();
+  const ok=save();
+  const st=document.getElementById("saveStatus");
+  try{
+    const check=localStorage.getItem("lumi_ultimate_settings");
+    if(!check||!ok){if(st){st.textContent="⚠️ Save failed — storage full"; st.className="key-status bad";} return;}
+  }catch(e){if(st){st.textContent="⚠️ Save failed: "+e.message; st.className="key-status bad";} return;}
+  if(st){st.textContent="✓ All settings saved (STT: "+s.stt_timeout+"s)";st.className="key-status ok";}
+  setTimeout(()=>location.href="index.html",600);
+};
+loadAll();
+</script>
+</body>
+</html>
